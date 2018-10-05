@@ -103,7 +103,7 @@ fun fib(n: Int): Int{
  */
 fun lcm(m: Int, n: Int): Int= TODO()
 
-}
+
 
 /**
  * Простая
@@ -161,7 +161,7 @@ fun isCoPrime(m: Int, n: Int): Boolean{
 fun squareBetweenExists(m: Int, n: Int): Boolean= TODO()
 
 
-}
+
 
 /**
  * Средняя
@@ -237,7 +237,7 @@ fun revert(n: Int): Int{
 }
 
 
-}
+
 
 /**
  * Средняя
@@ -248,7 +248,8 @@ fun revert(n: Int): Int{
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean{
+fun isPalindrome(n: Int): Boolean= TODO()
+
 
 
 /**
