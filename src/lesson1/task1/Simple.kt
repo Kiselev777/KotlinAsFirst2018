@@ -1,6 +1,7 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson1.task1
 
+import jdk.nashorn.internal.runtime.JSType.toDouble
 import kotlin.math.*
 
 /**
@@ -115,7 +116,7 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  * Сколько денег будет на счету через 3 года (с учётом сложных процентов)?
  * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
  */
-fun accountInThreeYears(initial: Int, percent: Double): Double = (initial*(percent/100)*(percent/100)*(percent/100))
+fun accountInThreeYears(initial: Int, percent: Int): Double = (toDouble(initial)*(percent/100)*(percent/100)*(percent/100))
 
 /**
  * Простая
