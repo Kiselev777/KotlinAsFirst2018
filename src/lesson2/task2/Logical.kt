@@ -21,15 +21,14 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  */
 fun isNumberHappy(number: Int): Boolean {
     if (number in 1000..9999){
-       if(number/1000+(number/100)==(number%100)/10+number%10){
+       if(number/1000+(number/100)%10==(number/10)%10+number%10)
            return true
        }
-
-    }
     return false
+    }
 
 
-}
+
 
 /**
  * Простая

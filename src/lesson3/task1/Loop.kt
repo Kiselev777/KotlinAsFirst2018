@@ -1,6 +1,8 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson3.task1
 
+import com.sun.org.apache.bcel.internal.generic.RETURN
 import kotlin.math.sqrt
 
 /**
@@ -38,7 +40,7 @@ fun isPrime(n: Int): Boolean {
  */
 fun isPerfect(n: Int): Boolean {
     var sum = 1
-    for (m in 2..n/2) {
+    for (m in 2..n / 2) {
         if (n % m > 0) continue
         sum += m
         if (sum > n) break
@@ -66,13 +68,16 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int{
-    var sum=0
-    while(n>0){
-        n/10
-        sum++
+fun digitNumber(n: Int): Int {
+    var number = n
+    var lenghNumber = 0
+    if (n == 0) return 1
+    if (n == Int.MAX_VALUE) return 9
+    while (number != 0) {
+        lenghNumber++
+        number /= 10
     }
-    return sum
+    return lenghNumber
 }
 
 /**
@@ -81,17 +86,17 @@ fun digitNumber(n: Int): Int{
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int{
-    var fib1=1
-    var fib2=1
-    var fib3=1
+fun fib(n: Int): Int {
+    var fib1 = 1
+    var fib2 = 1
+    var fib3 = 1
 
-        for(i in 3..n){
-            fib3 = fib1+fib2
-            fib1 = fib2
-            fib2 = fib3
+    for (i in 3..n) {
+        fib3 = fib1 + fib2
+        fib1 = fib2
+        fib2 = fib3
     }
-  return fib3
+    return fib3
 
 }
 
@@ -101,8 +106,7 @@ fun fib(n: Int): Int{
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int= TODO()
-
+fun lcm(m: Int, n: Int): Int = TODO()
 
 
 /**
@@ -111,12 +115,13 @@ fun lcm(m: Int, n: Int): Int= TODO()
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-  var  minDevider:Int=0
-        for(i in 2..n){
-            if(n%i==0) {
-                minDevider=i
-            break}
+    var minDevider: Int = 0
+    for (i in 2..n) {
+        if (n % i == 0) {
+            minDevider = i
+            break
         }
+    }
 
     return minDevider
 }
@@ -126,13 +131,14 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int{
-    var maxDevider:Int=0
-        for(i in (n-1) downTo 2){
-            if(n%i==0){
-                maxDevider=i
-            break}
+fun maxDivisor(n: Int): Int {
+    var maxDevider: Int = 0
+    for (i in (n - 1) downTo 2) {
+        if (n % i == 0) {
+            maxDevider = i
+            break
         }
+    }
 
     return maxDevider
 }
@@ -144,9 +150,9 @@ fun maxDivisor(n: Int): Int{
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean{
-    for(i in 2..maxOf(n,m)){
-        if(i%n==0||i%m==0) return false
+fun isCoPrime(m: Int, n: Int): Boolean {
+    for (i in 2..maxOf(n, m)) {
+        if (i % n == 0 || i % m == 0) return false
     }
     return true
 }
@@ -158,9 +164,7 @@ fun isCoPrime(m: Int, n: Int): Boolean{
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean= TODO()
-
-
+fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
 
 
 /**
@@ -186,19 +190,13 @@ fun collatzSteps(x: Int): Int {
         if (x1 % 2 == 0) {
             x1 = x1 / 2
             count++
-        }
-        else{
-            x1=3*x1+1
+        } else {
+            x1 = 3 * x1 + 1
             count++
         }
     }
     return count
 }
-
-
-
-
-
 
 
 /**
@@ -226,17 +224,15 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int{
-    var count:Int=0
-    var n1:Int = n
+fun revert(n: Int): Int {
+    var count: Int = 0
+    var n1: Int = n
     while (n1 != 0) {
         count = count * 10 + (n1 % 10)
-        n1=n1/10
+        n1 = n1 / 10
     }
     return count
 }
-
-
 
 
 /**
@@ -248,8 +244,7 @@ fun revert(n: Int): Int{
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean= TODO()
-
+fun isPalindrome(n: Int): Boolean = TODO()
 
 
 /**
