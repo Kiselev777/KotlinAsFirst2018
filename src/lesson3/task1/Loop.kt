@@ -3,6 +3,8 @@
 package lesson3.task1
 
 import com.sun.org.apache.bcel.internal.generic.RETURN
+import com.sun.org.apache.xalan.internal.lib.ExsltMath.power
+import lesson1.task1.sqr
 import kotlin.math.sqrt
 
 /**
@@ -72,7 +74,9 @@ fun digitNumber(n: Int): Int {
     var number = n
     var lenghNumber = 0
     if (n == 0) return 1
-    if (n == Int.MAX_VALUE) return 9
+    if (n == Int.MAX_VALUE) {
+        return 9
+    }
     while (number != 0) {
         lenghNumber++
         number /= 10
@@ -106,7 +110,13 @@ fun fib(n: Int): Int {
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    var minDevider = 0
+    for (i in maxOf(m, n)..m * n) {
+        if (i % n == 0 && i % m == 0 && minDevider == 0) minDevider = i
+    }
+    return minDevider
+}
 
 
 /**
@@ -115,13 +125,15 @@ fun lcm(m: Int, n: Int): Int = TODO()
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
+    if(isPrime(n)==true)
+        return n
     var minDevider: Int = 0
-    for (i in 2..n) {
-        if (n % i == 0) {
-            minDevider = i
-            break
+        for (i in 2..n/2) {
+            if (n % i == 0) {
+                minDevider = i
+                break
+            }
         }
-    }
 
     return minDevider
 }
@@ -133,7 +145,9 @@ fun minDivisor(n: Int): Int {
  */
 fun maxDivisor(n: Int): Int {
     var maxDevider: Int = 0
-    for (i in (n - 1) downTo 2) {
+    if(isPrime(n)==true)
+        return 1
+    for (i in n/2 downTo 1) {
         if (n % i == 0) {
             maxDevider = i
             break
@@ -151,8 +165,8 @@ fun maxDivisor(n: Int): Int {
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    for (i in 2..maxOf(n, m)) {
-        if (i % n == 0 || i % m == 0) return false
+    for (i in 2..minOf(n, m)) {
+        if (n % i == 0 && m % i== 0) return false
     }
     return true
 }
@@ -164,7 +178,15 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
+fun squareBetweenExists(m: Int, n: Int): Boolean {
+    for (i in 1..sqrt(n.toDouble()).toInt()) {
+        if (sqr(i) in m..n) {
+            return true
+            break
+        }
+    }
+    return false
+}
 
 
 /**
@@ -188,7 +210,7 @@ fun collatzSteps(x: Int): Int {
     var x1: Int = x
     while (x1 != 1) {
         if (x1 % 2 == 0) {
-            x1 = x1 / 2
+            x1 = x1 /  2
             count++
         } else {
             x1 = 3 * x1 + 1
@@ -244,7 +266,7 @@ fun revert(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
+fun isPalindrome(n: Int): Boolean=(n==revert(n))
 
 
 /**
@@ -255,7 +277,24 @@ fun isPalindrome(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean{
+ if(n==0)
+     return false
+    var n1=n
+    val absNumber=n%10
+    var i1=0
+    for(i in 1..digitNumber(n)){
+        i1=n1%10
+        if(i1==absNumber){
+            n1=n1/10
+
+
+        }
+        else
+            return true
+    }
+return false
+}
 
 /**
  * Сложная
@@ -266,7 +305,17 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var lenght = 0
+    var sqr = 0
+    var i = 1
+    while (lenght < n) {
+        sqr = i*i
+        lenght += digitNumber(sqr)
+        i++
+    }
+    return sqr.toString()[digitNumber(sqr) - lenght + n - 1] - '0'
+}
 
 /**
  * Сложная
@@ -277,4 +326,14 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var i = 1
+    var length = 0
+    var fib = 0
+    while (length < n) {
+        fib = fib(i)
+        length += digitNumber(fib)
+        i++
+    }
+    return fib.toString()[digitNumber(fib) - length + n - 1] - '0'
+}

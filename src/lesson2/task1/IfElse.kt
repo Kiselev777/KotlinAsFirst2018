@@ -81,8 +81,19 @@ fun ageDescription(age: Int): String = when {
  */
 fun timeForHalfWay(t1: Double, v1: Double,
                    t2: Double, v2: Double,
-                   t3: Double, v3: Double): Double= TODO()
-
+                   t3: Double, v3: Double): Double{
+    var a1=t1*v1
+    var a2=t2*v2
+    var a3=t3*v3
+    var halfAway=(a1+a2+a3)/2
+    return when{
+        a1==a2+a3 -> t1
+        a1 >a2+a3->t1-(a1-halfAway)/v1
+        (halfAway>a1)&&(halfAway<(a1+a2))->t1+ (halfAway-a1)/v2
+        halfAway==a1+a2 -> t1+t2
+        else ->t1+t2+(halfAway-(a1+a2))/v3
+    }
+}
 /**
  * Простая
  *
@@ -95,13 +106,13 @@ fun timeForHalfWay(t1: Double, v1: Double,
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
                        rookX2: Int, rookY2: Int): Int = when {
-    (kingX==rookX1)||(kingX==rookX2)&&(kingY==rookY1)||(kingY==rookY2)->3
-    (kingX==rookX1||kingY==rookY1) && (kingX!=rookX2||kingY!=rookY2)-> 1
-    (kingX==rookX2||kingY==rookY2)&&(kingX!=rookX1||kingY!=rookY1)-> 2
+    !(kingX != rookX1 && (!(kingX == rookX2 && kingY == rookY1)) && kingY != rookY2) ->3
+    (!(kingX != rookX1 && kingY != rookY1)) && (!(kingX == rookX2 && kingY == rookY2)) -> 1
+    (!(kingX == rookX1 && kingY == rookY1)) && (!(kingX != rookX2 && kingY != rookY2)) -> 2
     else -> 0
-    /*
+/*
     как-то криво,согласен
-     */
+*/
 }
 
 /**
@@ -143,7 +154,7 @@ fun triangleKind(a: Double, b: Double, c: Double):Int {
         return when {
             sqr(minLength) + sqr(medLength) == sqr(maxLength) -> 1
             sqr(minLength) + sqr(medLength) < sqr(maxLength) -> 2
-            else-> 0
+            else -> 0
         }
     else
         return -1
@@ -158,4 +169,14 @@ fun triangleKind(a: Double, b: Double, c: Double):Int {
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int= TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    return when{
+        (b>c && b<d) && (a !in c..d ) ->(b-c)
+        (d>a && d<b) && (c !in a..b )->(d-a)
+        d==a || b==c ->0
+        a in c..d && b in c..d->(b-a)
+        c in a..b && d in a..b->(d-c)
+        else-> -1
+
+    }
+}
