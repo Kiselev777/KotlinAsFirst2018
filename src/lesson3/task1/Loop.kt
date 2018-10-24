@@ -110,12 +110,18 @@ fun fib(n: Int): Int {
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int {
-    var minDevider = 0
-    for (i in maxOf(m, n)..m * n) {
-        if (i % n == 0 && i % m == 0 && minDevider == 0) minDevider = i
+fun lcm(m: Int, n: Int): Int{
+    var firstNumber = m
+var secondNumber = n
+while (firstNumber != secondNumber) {
+    if (firstNumber > secondNumber) {
+        firstNumber =firstNumber-secondNumber
+    } else {
+        secondNumber =secondNumber-firstNumber
     }
-    return minDevider
+}
+return m * n / firstNumber
+
 }
 
 
