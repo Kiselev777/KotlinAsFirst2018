@@ -2,9 +2,11 @@
 
 package lesson4.task1
 
+import lesson3.task1.minDivisor
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
 import java.lang.Math.pow
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 /**
@@ -216,18 +218,17 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
  * Множители в списке должны располагаться по возрастанию.
  */
 fun factorize(n: Int): List<Int> {
-    var list = listOf<Int>()
     var n2 = n
-    var i = 2
-    while (i <= n2) {
-        while (n2 % i == 0) {
-            n2 /= i
-            list += i
-        }
+    var i = 0
+    val list: MutableList<Int> = mutableListOf()
+    while (n2 != 1) {
+        list.add(minDivisor(n2))
+        n2 /= list[i]
         i++
     }
     return list
 }
+
 
 /**
  * Сложная
@@ -236,7 +237,7 @@ fun factorize(n: Int): List<Int> {
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int):String = factorize(n).joinToString(separator = "*")
+fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*")
 
 /**
  * Средняя
@@ -247,11 +248,10 @@ fun factorizeToString(n: Int):String = factorize(n).joinToString(separator = "*"
  */
 fun convert(n: Int, base: Int): List<Int> {
     var n2 = n
-    var count = 0
     var list = mutableListOf<Int>()
-    while (n2 > base) {
+    while (n2 >= base) {
         list.add(0, n2 % base)
-        n2 / base
+        n2 /= base
     }
     list.add(0, n2)
     return list
@@ -265,7 +265,16 @@ fun convert(n: Int, base: Int): List<Int> {
  * строчными буквами: 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String{
+    var number=convert(n,base)
+    var resultString=""
+    for(i in 0 until number.size) {
+        if (number[i] > 9) resultString += 'a' + number[i] - 10
+        else resultString += number[i]
+    }
+    return resultString
+
+}
 
 /**
  * Средняя
@@ -278,7 +287,7 @@ fun decimal(digits: List<Int>, base: Int): Int {
     var numberLengh = digits.size
     var number = 0
     for (i in 0 until digits.size) {
-        number= (number + digits[i]*pow(base.toDouble(), (numberLengh-i-1).toDouble())).toInt()
+        number = (number + digits[i] * pow(base.toDouble(), (numberLengh - i - 1).toDouble())).toInt()
 
     }
     return number
@@ -293,7 +302,52 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: str = "13c", base = 14 -> 250
  */
-fun decimalFromString(str: String, base: Int): Int = TODO()
+fun decimalFromString(str: String, base: Int): Int{
+        var result = 0
+        for (i in 0 until str.length){
+            result += convertToChar(str[i]) * base.toDouble().pow(str.length - 1 - i).toInt()}
+        return result
+}
+fun convertToChar(n: Char): Int {
+    return when (n) {
+        '1' -> 1
+        '2' -> 2
+        '3' -> 3
+        '4' -> 4
+        '5' -> 5
+        '6' -> 6
+        '7' -> 7
+        '8' -> 8
+        '9' -> 9
+        'a' -> 10
+        'b' -> 11
+        'c' -> 12
+        'd' -> 13
+        'e' -> 14
+        'f' -> 15
+        'g' -> 16
+        'h' -> 17
+        'i' -> 18
+        'j' -> 19
+        'k' -> 20
+        'l' -> 21
+        'm' -> 22
+        'n' -> 23
+        'o' -> 24
+        'p' -> 25
+        'q' -> 26
+        'r' -> 27
+        's' -> 28
+        't' -> 29
+        'u' -> 30
+        'v' -> 31
+        'w' -> 32
+        'x' -> 33
+        'y' -> 34
+        'z' -> 35
+        else -> 0
+    }
+}
 
 /**
  * Сложная
@@ -303,7 +357,22 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String{
+    val digits =
+            mapOf("M" to 1000, "CM" to 900, "D" to 500, "CD" to 400, "C" to 100, "XC" to 90,
+                    "L" to 50, "XL" to 40, "X" to 10, "IX" to 9, "V" to 5, "IV" to 4, "I" to 1)
+    var number=n
+    var list= mutableListOf<String>()
+    for ((roman, arabian) in digits) {
+        while (number >= arabian) {
+            list.add(roman)
+            number -= arabian
+        }
+    }
+    return list.joinToString(separator = "")
+}
+
+
 
 /**
  * Очень сложная

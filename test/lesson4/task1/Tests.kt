@@ -183,7 +183,7 @@ class Tests {
 
     @Test
     @Tag("Hard")
-    fun convertToString() {
+   fun convertToString() {
         assertEquals("1", convertToString(1, 2))
         assertEquals("1210", convertToString(100, 4))
         assertEquals("13c", convertToString(250, 14))
