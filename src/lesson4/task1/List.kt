@@ -358,12 +358,12 @@ fun convertToChar(n: Char): Int {
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 fun roman(n: Int): String{
-    val digits =
+    val romanNumber =
             mapOf("M" to 1000, "CM" to 900, "D" to 500, "CD" to 400, "C" to 100, "XC" to 90,
                     "L" to 50, "XL" to 40, "X" to 10, "IX" to 9, "V" to 5, "IV" to 4, "I" to 1)
     var number=n
     var list= mutableListOf<String>()
-    for ((roman, arabian) in digits) {
+    for ((roman, arabian) in romanNumber) {
         while (number >= arabian) {
             list.add(roman)
             number -= arabian
