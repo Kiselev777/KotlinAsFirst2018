@@ -37,11 +37,12 @@ fun isNumberHappy(number: Int): Boolean {
  * Считать, что ферзи не могут загораживать друг друга.
  */
 fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
-    if (x1 == x2 || y1 == y2 || Math.sqrt(sqr(x1).toDouble() + sqr(y1).toDouble()) == Math.sqrt(sqr(x2).toDouble() + sqr(y2))) {
-        return true
-
+    var a= Math.sqrt(sqr(x1).toDouble() + sqr(y1).toDouble())
+    var b= Math.sqrt(sqr(x2).toDouble() + sqr(y2))
+    if ((x1 != x2) && (y1 != y2) && (a != b)) {
+        return false
     }
-    return false
+    return true
 }
 
 
@@ -58,9 +59,8 @@ fun daysInMonth(month: Int, year: Int): Int{
         month in 4..6  step 2 ->30
         month in 9..11 step 2 -> 30
         else -> when{
-            year % 400 == 0 -> 29
-            (year % 100 == 0) &&(year % 400 > 0) -> 28
-            year % 4 == 0 -> 29
+            (year % 100 == 0)&& (year % 400 !=0) -> 28
+            (year % 400 == 0) ||  (year % 4 == 0)  -> 29
             else -> 28
         }
     }

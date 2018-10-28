@@ -5,7 +5,6 @@ package lesson3.task1
 import com.sun.org.apache.bcel.internal.generic.RETURN
 import com.sun.org.apache.xalan.internal.lib.ExsltMath.power
 import lesson1.task1.sqr
-import kotlin.math.abs
 import kotlin.math.sqrt
 
 /**
@@ -71,14 +70,22 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int{
-    if(n==Int.MAX_VALUE) return 9
-    else return abs(n).toString().length
+fun digitNumber(n: Int): Int {
+    var number = n
+    var lenghNumber = 0
+    if (n == 0) return 1
+    if (n == Int.MAX_VALUE) {
+        return 9
+    }
+    while (number != 0) {
+        lenghNumber++
+        number /= 10
+    }
+    return lenghNumber
 }
 
 /**
  * Простая
- *
  *
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
@@ -178,14 +185,12 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
-    if(n>0) {
-        for (i in 1..sqrt(n.toDouble()).toInt()) {
+        for (i in 0..sqrt(n.toDouble()).toInt()) {
             if (sqr(i) in m..n) {
                 return true
                 break
             }
         }
-    }
     return false
 }
 
