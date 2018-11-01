@@ -4,6 +4,7 @@ package lesson2.task2
 
 import lesson1.task1.sqr
 import java.lang.Math.sqrt
+import kotlin.math.abs
 import kotlin.math.sqrt
 
 /**
@@ -20,13 +21,7 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Четырехзначное число назовем счастливым, если сумма первых двух ее цифр равна сумме двух последних.
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
-fun isNumberHappy(number: Int): Boolean {
-    if (number in 1000..9999) {
-        if (number / 1000 + (number / 100) % 10 == (number / 10) % 10 + number % 10)
-            return true
-    }
-    return false
-}
+fun isNumberHappy(number: Int): Boolean=(number / 1000 + number / 100 % 10) == (number / 10 % 10 + number % 10)
 
 
 /**
@@ -36,14 +31,9 @@ fun isNumberHappy(number: Int): Boolean {
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
-    var a= Math.sqrt(sqr(x1).toDouble() + sqr(y1).toDouble())
-    var b= Math.sqrt(sqr(x2).toDouble() + sqr(y2))
-    if ((x1 != x2) && (y1 != y2) && (a != b)) {
-        return false
-    }
-    return true
-}
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean= (x1 == x2 || y1 == y2 || abs(x1 - x2) == abs(y1 - y2))
+
+
 
 
 /**

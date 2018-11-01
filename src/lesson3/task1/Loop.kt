@@ -74,13 +74,11 @@ fun digitNumber(n: Int): Int {
     var number = n
     var lenghNumber = 0
     if (n == 0) return 1
-    if (n == Int.MAX_VALUE) {
-        return 9
-    }
-    while (number != 0) {
+   do{
         lenghNumber++
         number /= 10
     }
+   while (number>0)
     return lenghNumber
 }
 

@@ -1,7 +1,7 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson1.task1
 
-import jdk.nashorn.internal.runtime.JSType.toDouble
+
 import java.lang.Math.pow
 import kotlin.math.*
 
@@ -69,7 +69,7 @@ fun seconds(hours: Int, minutes: Int, seconds: Int): Int = 3600 * hours + 60 * m
  * Определить длину того же отрезка в метрах (в данном случае 18.98).
  * 1 сажень = 3 аршина = 48 вершков, 1 вершок = 4.445 см.
  */
-fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double=4.445*(vershoks+16*arshins+48*sagenes)/100
+fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double= 4.445 * (vershoks + 16 * arshins + 48 * sagenes) / 100
 
 
 /**
@@ -96,7 +96,7 @@ fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double = sqrt(s
  * Пользователь задает целое число, большее 100 (например, 3801).
  * Определить третью цифру справа в этом числе (в данном случае 8).
  */
-fun thirdDigit(number: Int): Int = ((number%1000)/100)
+fun thirdDigit(number: Int): Int = number%1000/100
 
 /**
  * Простая
@@ -105,9 +105,8 @@ fun thirdDigit(number: Int): Int = ((number%1000)/100)
  * прибыл на станцию назначения в h2 часов m2 минут того же дня (например в 13:01).
  * Определите время поезда в пути в минутах (в данном случае 216).
  */
-fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int {
-    return (60-minutesDepart) + minutesArrive +(hoursArrive-hoursDepart-1)*60
-}
+fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int):
+        Int=(60-minutesDepart) + minutesArrive +(hoursArrive-hoursDepart-1)*60
 
 
 
@@ -127,4 +126,4 @@ fun accountInThreeYears(initial: Int, percent: Int): Double=initial * pow((100+p
  * Пользователь задает целое трехзначное число (например, 478).
  * Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
-fun numberRevert(number: Int): Int = ((number%10)*100+((number%100)/10)*10+(number/100))
+fun numberRevert(number: Int): Int = number%10*100+number%100/10*10+number/100
