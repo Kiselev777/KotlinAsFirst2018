@@ -2,9 +2,10 @@
 
 package lesson3.task1
 
-import com.sun.org.apache.bcel.internal.generic.RETURN
-import com.sun.org.apache.xalan.internal.lib.ExsltMath.power
+
 import lesson1.task1.sqr
+import java.lang.Math.floor
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 /**
@@ -72,14 +73,12 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int): Int {
     var number = n
-    var lenghNumber = 0
-    if (n == 0) return 1
-   do{
-        lenghNumber++
+    var lengthNumber = 0
+    do {
+        lengthNumber++
         number /= 10
-    }
-   while (number>0)
-    return lenghNumber
+    } while (number != 0)
+    return lengthNumber
 }
 
 /**
@@ -108,17 +107,17 @@ fun fib(n: Int): Int {
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int{
+fun lcm(m: Int, n: Int): Int {
     var firstNumber = m
-var secondNumber = n
-while (firstNumber != secondNumber) {
-    if (firstNumber > secondNumber) {
-        firstNumber =firstNumber-secondNumber
-    } else {
-        secondNumber =secondNumber-firstNumber
+    var secondNumber = n
+    while (firstNumber != secondNumber) {
+        if (firstNumber > secondNumber) {
+            firstNumber = firstNumber - secondNumber
+        } else {
+            secondNumber = secondNumber - firstNumber
+        }
     }
-}
-return m * n / firstNumber
+    return m * n / firstNumber
 
 }
 
@@ -129,17 +128,12 @@ return m * n / firstNumber
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    if(isPrime(n)==true)
-        return n
-    var minDevider: Int = 0
-        for (i in 2..n/2) {
-            if (n % i == 0) {
-                minDevider = i
-                break
-            }
-        }
-
-    return minDevider
+    var minDivider = 0
+    for (i in 2..n / 2) if (n % i == 0) {
+        minDivider = i
+        break
+    }
+    return minDivider
 }
 
 /**
@@ -148,17 +142,12 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    var maxDevider: Int = 0
-    if(isPrime(n)==true)
-        return 1
-    for (i in n/2 downTo 1) {
-        if (n % i == 0) {
-            maxDevider = i
-            break
-        }
+    var maxDivider = 0
+    for (i in n / 2 downTo 1) if (n % i == 0) {
+        maxDivider = i
+        break
     }
-
-    return maxDevider
+    return maxDivider
 }
 
 /**
@@ -170,7 +159,7 @@ fun maxDivisor(n: Int): Int {
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
     for (i in 2..minOf(n, m)) {
-        if (n % i == 0 && m % i== 0) return false
+        if (n % i == 0 && m % i == 0) return false
     }
     return true
 }
@@ -183,12 +172,8 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
-        for (i in 0..sqrt(n.toDouble()).toInt()) {
-            if (sqr(i) in m..n) {
-                return true
-                break
-            }
-        }
+    for (i in sqrt(m.toDouble()).toInt()..sqrt(m.toDouble()).toInt() + 1)
+        if (sqr(i) in m..n) return true
     return false
 }
 
@@ -210,16 +195,15 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * этого для какого-либо начального X > 0.
  */
 fun collatzSteps(x: Int): Int {
-    var count: Int = 0
+    var count = 0
     var x1: Int = x
     while (x1 != 1) {
         if (x1 % 2 == 0) {
-            x1 = x1 /  2
-            count++
+            x1 /= 2
         } else {
             x1 = 3 * x1 + 1
-            count++
         }
+        count++
     }
     return count
 }
@@ -251,7 +235,7 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun revert(n: Int): Int {
-    var count: Int = 0
+    var count = 0
     var n1: Int = n
     while (n1 != 0) {
         count = count * 10 + (n1 % 10)
@@ -270,7 +254,7 @@ fun revert(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean=(n==revert(n))
+fun isPalindrome(n: Int): Boolean = (n == revert(n))
 
 
 /**
@@ -281,23 +265,22 @@ fun isPalindrome(n: Int): Boolean=(n==revert(n))
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean{
- if(n==0)
-     return false
-    var n1=n
-    val absNumber=n%10
-    var i1=0
-    for(i in 1..digitNumber(n)){
-        i1=n1%10
-        if(i1==absNumber){
-            n1=n1/10
+fun hasDifferentDigits(n: Int): Boolean {
+    if (n == 0)
+        return false
+    var n1 = n
+    val absNumber = n % 10
+    var i1 = 0
+    for (i in 1..digitNumber(n)) {
+        i1 = n1 % 10
+        if (i1 == absNumber) {
+            n1 = n1 / 10
 
 
-        }
-        else
+        } else
             return true
     }
-return false
+    return false
 }
 
 /**
@@ -310,15 +293,15 @@ return false
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun squareSequenceDigit(n: Int): Int {
-    var lenght = 0
+    var length = 0
     var sqr = 0
     var i = 1
-    while (lenght < n) {
-        sqr = i*i
-        lenght += digitNumber(sqr)
+    while (length < n) {
+        sqr = i * i
+        length += digitNumber(sqr)
         i++
     }
-    return sqr.toString()[digitNumber(sqr) - lenght + n - 1] - '0'
+    return sqr / 10.0.pow(length - n.toDouble()).toInt() % 10
 }
 
 /**
@@ -331,13 +314,11 @@ fun squareSequenceDigit(n: Int): Int {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun fibSequenceDigit(n: Int): Int {
-    var i = 1
     var length = 0
-    var fib = 0
+    var i = 0
     while (length < n) {
-        fib = fib(i)
-        length += digitNumber(fib)
         i++
+        length += digitNumber(fib(i))
     }
-    return fib.toString()[digitNumber(fib) - length + n - 1] - '0'
+    return fib(i) / 10.0.pow(length - n.toDouble()).toInt() % 10
 }
