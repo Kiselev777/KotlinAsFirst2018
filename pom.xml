@@ -63,6 +63,11 @@
             <artifactId>kotlinx-html-jvm</artifactId>
             <version>${kotlinx.html.version}</version>
         </dependency>
+        <dependency>
+            <groupId>ru.spbstu</groupId>
+            <artifactId>kfirst</artifactId>
+            <version>0.1.14</version>
+        </dependency>
     </dependencies>
     <build>
         <sourceDirectory>src</sourceDirectory>

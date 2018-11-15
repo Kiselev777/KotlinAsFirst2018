@@ -172,11 +172,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean {
-    for (i in sqrt(m.toDouble()).toInt()..sqrt(m.toDouble()).toInt() + 1)
-        if (sqr(i) in m..n) return true
-    return false
-}
+fun squareBetweenExists(m: Int, n: Int): Boolean = sqrt(m.toDouble()) <= floor(sqrt(n.toDouble()))
 
 
 /**
@@ -197,7 +193,7 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  */
 fun collatzSteps(x: Int): Int {
     var count = 0
-    var x1: Int = x
+    var x1 = x
     while (x1 != 1) {
         if (x1 % 2 == 0) {
             x1 /= 2
@@ -237,7 +233,7 @@ fun cos(x: Double, eps: Double): Double = TODO()
  */
 fun revert(n: Int): Int {
     var count = 0
-    var n1: Int = n
+    var n1 = n
     while (n1 != 0) {
         count = count * 10 + (n1 % 10)
         n1 = n1 / 10
@@ -302,8 +298,12 @@ fun squareSequenceDigit(n: Int): Int {
         length += digitNumber(sqr)
         i++
     }
-    return sqr / 10.0.pow(length - n.toDouble()).toInt() % 10
+
+    return squareResults(sqr, length, n)
 }
+
+fun squareResults(n: Int, b: Int, c: Int): Int = n / 10.0.pow(b - c.toDouble()).toInt() % 10
+
 
 /**
  * Сложная
@@ -321,5 +321,5 @@ fun fibSequenceDigit(n: Int): Int {
         i++
         length += digitNumber(fib(i))
     }
-    return fib(i) / 10.0.pow(length - n.toDouble()).toInt() % 10
+    return squareResults(fib(i), length, n)
 }

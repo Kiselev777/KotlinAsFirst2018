@@ -21,7 +21,7 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Четырехзначное число назовем счастливым, если сумма первых двух ее цифр равна сумме двух последних.
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
-fun isNumberHappy(number: Int): Boolean=(number / 1000 + number / 100 % 10) == (number / 10 % 10 + number % 10)
+fun isNumberHappy(number: Int): Boolean = (number / 1000 + number / 100 % 10) == (number / 10 % 10 + number % 10)
 
 
 /**
@@ -31,9 +31,7 @@ fun isNumberHappy(number: Int): Boolean=(number / 1000 + number / 100 % 10) == (
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean= (x1 == x2 || y1 == y2 || abs(x1 - x2) == abs(y1 - y2))
-
-
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = (x1 == x2 || y1 == y2 || abs(x1 - x2) == abs(y1 - y2))
 
 
 /**
@@ -42,13 +40,13 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean= (x1 == x2 || y1
  * Дан номер месяца (от 1 до 12 включительно) и год (положительный).
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
-fun daysInMonth(month: Int, year: Int): Int{
-    return when{
+fun daysInMonth(month: Int, year: Int): Int {
+    return when {
         month in 1..7 step 2 || month in 8..12 step 2 -> 31
-        month in 4..6 step 2 || month in 9..11 step 2  ->30
-        else -> when{
-            (year % 100 == 0)&& (year % 400 !=0) -> 28
-            (year % 400 == 0) ||  (year % 4 == 0)  -> 29
+        month in 4..6 step 2 || month in 9..11 step 2 -> 30
+        else -> when {
+            (year % 100 == 0) && (year % 400 != 0) -> 28
+            (year % 400 == 0) || (year % 4 == 0) -> 29
             else -> 28
         }
     }
@@ -62,7 +60,8 @@ fun daysInMonth(month: Int, year: Int): Int{
  * Вернуть true, если утверждение верно
  */
 fun circleInside(x1: Double, y1: Double, r1: Double,
-                 x2: Double, y2: Double, r2: Double): Boolean= r2 >= Math.sqrt(sqr(x2 - x1) + sqr(y2 - y1)) + r1
+                 x2: Double, y2: Double, r2: Double): Boolean =
+        r2 >= Math.sqrt(sqr(x2 - x1) + sqr(y2 - y1)) + r1
 
 /**
  * Средняя
@@ -77,13 +76,5 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     val maxLength = maxOf(a, b, c)
     val minLength = minOf(a, b, c)
     val medLength = (a + b + c) - minLength - maxLength
-    return if (minLength <= r && minLength <= s)
-        if (medLength <= s || medLength <= r)
-            true
-        else
-            false
-    else
-        false
-
-
+    return (minLength <= r && minLength <= s) && (medLength <= s || medLength <= r)
 }
