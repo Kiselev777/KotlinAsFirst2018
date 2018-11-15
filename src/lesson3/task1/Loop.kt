@@ -112,9 +112,9 @@ fun lcm(m: Int, n: Int): Int {
     var secondNumber = n
     while (firstNumber != secondNumber) {
         if (firstNumber > secondNumber) {
-            firstNumber = firstNumber - secondNumber
+            firstNumber -= secondNumber
         } else {
-            secondNumber = secondNumber - firstNumber
+            secondNumber -= firstNumber
         }
     }
     return m * n / firstNumber
@@ -321,5 +321,9 @@ fun fibSequenceDigit(n: Int): Int {
         i++
         length += digitNumber(fib(i))
     }
-    return squareResults(fib(i), length, n)
+    return squareResults(
+            fib(i),
+            length,
+            n
+    )
 }
