@@ -130,7 +130,6 @@ fun abs(v: List<Double>): Double {
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
 fun mean(list: List<Double>): Double {
-    list.size
     if (list.isEmpty()) return 0.0
     return list.sum() / list.size
 }
@@ -278,7 +277,7 @@ fun convertToString(n: Int, base: Int): String {
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
 fun decimal(digits: List<Int>, base: Int): Int {
-    var numberLength = digits.size
+    val numberLength = digits.size
     var number = 0
     for (i in 0 until digits.size) {
         number = (number + digits[i] * pow(base.toDouble(), (numberLength - i - 1).toDouble())).toInt()
@@ -319,7 +318,7 @@ fun roman(n: Int): String {
             mapOf("M" to 1000, "CM" to 900, "D" to 500, "CD" to 400, "C" to 100, "XC" to 90,
                     "L" to 50, "XL" to 40, "X" to 10, "IX" to 9, "V" to 5, "IV" to 4, "I" to 1)
     var number = n
-    var list = mutableListOf<String>()
+    val list = mutableListOf<String>()
     for ((roman, arabian) in romanNumber) {
         while (number >= arabian) {
             list.add(roman)

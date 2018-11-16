@@ -3,9 +3,8 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
+import java.lang.Math.abs
 import java.lang.Math.sqrt
-import kotlin.math.abs
-import kotlin.math.sqrt
 
 /**
  * Пример
@@ -61,7 +60,7 @@ fun daysInMonth(month: Int, year: Int): Int {
  */
 fun circleInside(x1: Double, y1: Double, r1: Double,
                  x2: Double, y2: Double, r2: Double): Boolean =
-        r2 >= Math.sqrt(sqr(x2 - x1) + sqr(y2 - y1)) + r1
+        r2 >= sqrt(sqr(x2 - x1) + sqr(y2 - y1)) + r1
 
 /**
  * Средняя
