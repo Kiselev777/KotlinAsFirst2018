@@ -118,7 +118,7 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
-    var mapA = mutableMapOf<Int, List<String>>()
+    val mapA = mutableMapOf<Int, List<String>>()
     for ((name, grade) in grades)
         mapA[grade] = mapA.getOrDefault(grade, listOf()) + name
     for ((grade, name) in mapA)
@@ -167,7 +167,8 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  */
 fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
     val name = stuff.filter { it -> it.value.first == kind }.minBy { it.value.second }?.key
-    if (name != null) return name
+    if (name != null)
+        return name
     return null
 }
 
@@ -247,7 +248,7 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = word.toList().all {
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
 fun extractRepeats(list: List<String>): Map<String, Int> {
-    var newMap = mutableMapOf<String, Int>()
+    val newMap = mutableMapOf<String, Int>()
     list.forEach { char -> newMap[char] = list.count { secondChar -> secondChar == char } }
     return newMap.filterValues { it > 1 }
 }
