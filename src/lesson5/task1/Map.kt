@@ -310,34 +310,35 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
-/*
-var ans = setOf<String>()
-val sizeCapacity = capacity + 1
-val howManyShoos = treasures.size + 1
-val a: Array<Array<Int>> = Array(howManyShoos) { Array(sizeCapacity) { 0 } }
-var n: Int
-var n2: Int
-for (i in 0 until howManyShoos)
-a[i][0] = 0
-for (i in 0 until sizeCapacity)
-a[0][i] = 0
-for (i in 1 until howManyShoos) for (j in 1 until sizeCapacity) {
-n = treasures.values.toList()[i - 1].first
-n2 = treasures.values.toList()[i - 1].second
-a[i][j] =
-if (n <= j) max(a[i - 1][j], a[i - 1][j - n] + n2)
-else a[i - 1][j]
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+
+    var ans = setOf<String>()
+    val sizeCapacity = capacity + 1
+    val howManyShoos = treasures.size + 1
+    val a: Array<Array<Int>> = Array(howManyShoos) { Array(sizeCapacity) { 0 } }
+    var n: Int
+    var n2: Int
+    for (i in 0 until howManyShoos)
+        a[i][0] = 0
+    for (i in 0 until sizeCapacity)
+        a[0][i] = 0
+    for (i in 1 until howManyShoos) for (j in 1 until sizeCapacity) {
+        n = treasures.values.toList()[i - 1].first
+        n2 = treasures.values.toList()[i - 1].second
+        a[i][j] =
+                if (n <= j) max(a[i - 1][j], a[i - 1][j - n] + n2)
+                else a[i - 1][j]
+    }
+    fun findAns(k: Int, s: Int) {
+        if (a[k][s] == 0) return
+        if (a[k - 1][s] == a[k][s]) findAns(k - 1, s)
+        else {
+            findAns(k - 1, s - treasures.values.toList()[k - 1].first)
+            ans = ans.plus(treasures.keys.toList()[k - 1])
+        }
+    }
+    findAns(howManyShoos - 1, sizeCapacity - 1)
+    return ans
 }
-fun findAns(k: Int, s: Int) {
-if (a[k][s] == 0) return
-if (a[k - 1][s] == a[k][s]) findAns(k - 1, s)
-else {
-findAns(k - 1, s - treasures.values.toList()[k - 1].first)
-ans = ans.plus(treasures.keys.toList()[k - 1])
-}
-}
-findAns(howManyShoos - 1, sizeCapacity - 1)
-return ans
-Можно ли такое решение?Я алгоритм брал в интернете
-*/
+//  Я взял алгоритм с интернета,можно ли так?Если да,то проверьте и я буду пытаться исправлять и оптимизировать это решение
+// если нет,то хорошо
