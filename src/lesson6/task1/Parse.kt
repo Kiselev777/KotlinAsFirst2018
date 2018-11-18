@@ -1,6 +1,8 @@
-@file:Suppress("UNUSED_PARAMETER", "ConvertCallChainIntoSequence")
+@file:Suppress("UNUSED_PARAMETER", "ConvertCallChainIntoSequence", "ASSIGNED_BUT_NEVER_ACCESSED_VARIABLE")
 
 package lesson6.task1
+
+import lesson2.task2.daysInMonth
 
 /**
  * Пример
@@ -49,12 +51,10 @@ fun main(args: Array<String>) {
         val seconds = timeStrToSeconds(line)
         if (seconds == -1) {
             println("Введённая строка $line не соответствует формату ЧЧ:ММ:СС")
-        }
-        else {
+        } else {
             println("Прошло секунд с начала суток: $seconds")
         }
-    }
-    else {
+    } else {
         println("Достигнут <конец файла> в процессе чтения строки. Программа прервана")
     }
 }
@@ -71,7 +71,23 @@ fun main(args: Array<String>) {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+
+    val list = mapOf("января" to 1, "февраля" to 2, "марта" to 3,
+            "апреля" to 4, "мая" to 5, "июня" to 6, "июля" to 7
+            , "августа" to 8, "сентября" to 9, "октября" to 10, "ноября" to 11, "декабря" to 12)
+    val newStr = str.split(" ")
+    if (newStr.size != 3) return ""
+    else {
+        val month = list.get(newStr[1]) ?: 0
+        val day = newStr[0].toIntOrNull() ?: 0
+        val year = newStr[2].toIntOrNull() ?: 0
+        if (month != 0 && day != 0 && year != 0 && day in 0..daysInMonth(month, year))
+            String.format("%02d.%02d.%04d", day, month, year)
+        else ""
+    }
+    return ""
+}
 
 /**
  * Средняя
@@ -81,9 +97,27 @@ fun dateStrToDigit(str: String): String = TODO()
  * При неверном формате входной строки вернуть пустую строку
  *
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
- * входными данными.
+ * входными данными
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+
+    val list = mapOf("01" to "января", "02" to "февраля", "03" to "марта",
+            "04" to "апреля", "05" to "мая", "06" to "июня", "07" to "июля"
+            , "08" to "августа", "09" to "сентября", "10" to "октября", "11" to "ноября", "12" to "декабря")
+    val newStr = digital.split(" ")
+    if (newStr.size != 3) return ""
+    else {
+        val month = list.get(newStr[1])
+        val reallyMonth = newStr[1].toIntOrNull()
+        val day = newStr[0].toIntOrNull()
+        val year = newStr[2].toIntOrNull()
+        return if (reallyMonth != null && day != null && year != null && day in 0..daysInMonth(reallyMonth, year))
+            String.format("%02d.$month.%04d", day, year)
+        else ""
+    }
+    return ""
+
+}
 
 /**
  * Средняя
