@@ -133,7 +133,7 @@ fun dateDigitToStr(digital: String): String {
  * При неверном формате вернуть пустую строку
  */
 fun flattenPhoneNumber(phone: String): String {
-    if (Regex("""(\+?|\d)\d+?\s*(\(\d+\))?((\s*-*)*\d+)+""").matches(phone))
+    if (Regex("""(\+?|)\d+?\s*(\(\d+\))?((\s*-*)*\d+)+""").matches(phone))
         return Regex("""(\s)|(-)|(\()|(\))""").replace(phone, "")
     return ""
 }
@@ -152,14 +152,10 @@ fun bestLongJump(jumps: String): Int {
     var number = 0
     var newStr = Regex("""(-)|(%)""").replace(jumps, "")
             .replace(Regex("""\s+"""), " ").split(" ")
-    try {
-        for (i in 0 until newStr.size)
-            if (newStr[i].toIntOrNull()!! > number) number = newStr[i].toIntOrNull()!!
-        return if (number > 0) number
-        else -1
-    } catch (e: Exception) {
-        return -1
-    }
+    for (i in 0 until newStr.size)
+        if (newStr[i].toIntOrNull()!! > number) number = newStr[i].toIntOrNull()!!
+    return if (number > 0) number
+    else -1
 }
 
 /**
