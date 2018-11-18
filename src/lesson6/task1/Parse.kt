@@ -153,16 +153,16 @@ fun bestLongJump(jumps: String): Int {
     var maxJump = 0
     val newStr = Regex("""(-)|(%)""").replace(jumps, "")
             .replace(Regex("""\s+"""), " ").split(" ")
-    try {
+    return try {
         for (i in 0 until newStr.size) {
             val number = newStr.elementAt(i).toInt()
-            if(number>maxJump && number!=0) maxJump=number
+            if (number > maxJump && number != 0) maxJump = number
         }
-        return if (maxJump>0) maxJump
+        if (maxJump > 0) maxJump
         else -1
 
     } catch (e: Exception) {
-        return -1
+        -1
     }
 }
 
