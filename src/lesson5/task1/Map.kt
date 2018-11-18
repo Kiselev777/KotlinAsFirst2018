@@ -212,10 +212,9 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   subtractOf(a = mutableMapOf("a" to "z"), mapOf("a" to "z"))
  *     -> a changes to mutableMapOf() aka becomes empty
  */
-fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): MutableMap<String, String> {
-    for((key,value) in b)
-        if (b[key] == a[key] && b[value] == a[value]) a.remove(key, value)
-    return a
+fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>):
+        Unit = b.forEach { (key, value) ->
+    if (a[key] == value) a.remove(key)
 }
 
 /**
@@ -234,8 +233,7 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = a.toSet().int
  * Например:
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
-fun canBuildFrom(chars: List<Char>, word: String): Boolean = word.toList()
-        .all{ it -> it in chars.map { it.toLowerCase() }.toList() }
+fun canBuildFrom(chars: List<Char>, word: String): Boolean = word.toList().all { chars.contains(it) }
 
 /**
  * Средняя
