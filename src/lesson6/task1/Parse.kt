@@ -77,13 +77,13 @@ fun dateStrToDigit(str: String): String {
             "апреля" to 4, "мая" to 5, "июня" to 6, "июля" to 7
             , "августа" to 8, "сентября" to 9, "октября" to 10, "ноября" to 11, "декабря" to 12)
     val newStr = str.split(" ")
-    if (newStr.size != 3) return ""
+    return if (newStr.size != 3) ""
     else {
         val month = list.get(newStr[1]) ?: 0
         val day = newStr[0].toIntOrNull() ?: 0
         val year = newStr[2].toIntOrNull() ?: 0
         if (month != 0 && day != 0 && year != 0 && day in 0..daysInMonth(month, year))
-            String.format("%02d.%02d.%04d", day, month, year)
+            String.format("%02d.%02d.%d", day, month, year)
         else ""
     }
     return ""
@@ -104,15 +104,16 @@ fun dateDigitToStr(digital: String): String {
     val list = mapOf("01" to "января", "02" to "февраля", "03" to "марта",
             "04" to "апреля", "05" to "мая", "06" to "июня", "07" to "июля"
             , "08" to "августа", "09" to "сентября", "10" to "октября", "11" to "ноября", "12" to "декабря")
-    val newStr = digital.split(" ")
-    if (newStr.size != 3) return ""
+    val newStr = digital.split(".")
+    return if (newStr.size != 3) ""
     else {
         val month = list.get(newStr[1])
         val reallyMonth = newStr[1].toIntOrNull()
         val day = newStr[0].toIntOrNull()
         val year = newStr[2].toIntOrNull()
-        return if (reallyMonth != null && day != null && year != null && day in 0..daysInMonth(reallyMonth, year))
-            String.format("%02d.$month.%04d", day, year)
+        if (reallyMonth != null && day != null && year != null && month != null
+                && day in 0..daysInMonth(reallyMonth, year))
+            String.format("%d $month %d", day, year)
         else ""
     }
     return ""
