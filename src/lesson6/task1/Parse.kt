@@ -165,6 +165,7 @@ fun bestLongJump(jumps: String): Int {
         -1
     }
 }
+//Объясните,в чём проблема?(через IntOrNull тоже делал,хотя вроде разницы нет)
 
 /**
  * Сложная
@@ -199,12 +200,11 @@ fun plusMinus(expression: String): Int = TODO()
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
 fun firstDuplicateIndex(str: String): Int {
-    val newStr = str.toLowerCase().split(" ").toList()
-    var duplicateIndex = 0
-    for (i in 0..newStr.size - 2) {
-        duplicateIndex += newStr[i].length
-        if (newStr[i] == newStr[i + 1]) return duplicateIndex + i - newStr[i].length
-    }
+    val newStr = str.toLowerCase().split(" ")
+    var index = 0
+    if (newStr.isNotEmpty()) for (i in 0 until newStr.size - 1)
+        if (newStr[i] == newStr[i + 1]) return index
+        else index += newStr[i].length + 1
     return -1
 }
 
