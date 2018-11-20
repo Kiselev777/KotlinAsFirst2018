@@ -220,7 +220,31 @@ fun firstDuplicateIndex(str: String): Int {
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше либо равны нуля.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    var item = ""
+    if (description.any { it.toString() in "0".."9" }) {
+        val newStr = description.split(';')
+        var max = 0.0
+        if (newStr.isNotEmpty()) {
+            try {
+                for (i in 0 until newStr.size) {
+                    val name = newStr[i].split(' ').filter { it != "" }
+                    val coast = name[1].toDouble()
+                    if (name.size != 2) return ""
+                    else if (coast >= max) {
+                        max = coast
+                        item = name[0]
+                    }
+                }
+            } catch (e: NumberFormatException) {
+                return ""
+            }
+        }
+    }
+    return item
+
+}
+// Очень долго пытался решить через map задачку,возвращать это значение по ключу,который будет максимальным.Но не получалось
 
 /**
  * Сложная
