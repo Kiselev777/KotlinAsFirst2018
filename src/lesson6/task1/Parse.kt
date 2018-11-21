@@ -103,13 +103,13 @@ fun dateDigitToStr(digital: String): String {
     val newStr = digital.split(".")
     if (newStr.size != 3) return ""
     val month = mapOfMonth.get(newStr[1])
-    val reallyMonth = newStr[1].toInt()
+    val reallyMonth = newStr[1].toIntOrNull()
     val day = newStr[0].toIntOrNull()
     val year = newStr[2].toIntOrNull()
-    if (day == null || month == null || year == null
-            || day in 0..daysInMonth(reallyMonth, year))
-        return ""
-    return String.format("%d $month %d", day, year)
+    if (day != null && month != null && year != null
+             && day in 0..daysInMonth(reallyMonth!!, year))
+        return String.format("%d $month %d", day, year)
+    else return ""
 
 }
 
@@ -149,7 +149,7 @@ fun bestLongJump(jumps: String): Int {
     return try {
         for (i in 0 until newStr.size) {
             val number = newStr.elementAt(i).toInt()
-            if (number > maxJump && number != 0) maxJump = number
+            if (number >= maxJump && number != 0) maxJump = number
         }
         return maxJump
     } catch (e: Exception) {
