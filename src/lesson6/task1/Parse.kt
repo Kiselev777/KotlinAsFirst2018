@@ -73,20 +73,16 @@ fun main(args: Array<String>) {
  */
 fun dateStrToDigit(str: String): String {
 
-    val list = mapOf("января" to 1, "февраля" to 2, "марта" to 3,
+    val mapOfMonth = mapOf("января" to 1, "февраля" to 2, "марта" to 3,
             "апреля" to 4, "мая" to 5, "июня" to 6, "июля" to 7
             , "августа" to 8, "сентября" to 9, "октября" to 10, "ноября" to 11, "декабря" to 12)
     val newStr = str.split(" ")
-    return if (newStr.size != 3) ""
-    else {
-        val month = list.get(newStr[1]) ?: 0
-        val day = newStr[0].toIntOrNull() ?: 0
-        val year = newStr[2].toIntOrNull() ?: 0
-        if (month != 0 && day != 0 && year != null && day in 0..daysInMonth(month, year))
-            String.format("%02d.%02d.%d", day, month, year)
-        else ""
-    }
-    return ""
+    if (newStr.size != 3) return ""
+    val month = mapOfMonth.get(newStr[1]) ?: 0
+    val day = newStr[0].toIntOrNull() ?: 0
+    val year = newStr[2].toIntOrNull() ?: 0
+    if (month == 0 || day == 0 || day !in 0..daysInMonth(month, year)) return ""
+    return String.format("%02d.%02d.%d", day, month, year)
 }
 
 /**
@@ -101,22 +97,19 @@ fun dateStrToDigit(str: String): String {
  */
 fun dateDigitToStr(digital: String): String {
 
-    val list = mapOf("01" to "января", "02" to "февраля", "03" to "марта",
+    val mapOfMonth = mapOf("01" to "января", "02" to "февраля", "03" to "марта",
             "04" to "апреля", "05" to "мая", "06" to "июня", "07" to "июля"
             , "08" to "августа", "09" to "сентября", "10" to "октября", "11" to "ноября", "12" to "декабря")
     val newStr = digital.split(".")
-    return if (newStr.size != 3) ""
-    else {
-        val month = list.get(newStr[1])
-        val reallyMonth = newStr[1].toIntOrNull()
-        val day = newStr[0].toIntOrNull()
-        val year = newStr[2].toIntOrNull()
-        if (reallyMonth != null && day != null && year != null && month != null
-                && day in 0..daysInMonth(reallyMonth, year))
-            String.format("%d $month %d", day, year)
-        else ""
-    }
-    return ""
+    if (newStr.size != 3) return ""
+    val month = mapOfMonth.get(newStr[1])
+    val reallyMonth = newStr[1].toInt()
+    val day = newStr[0].toIntOrNull()
+    val year = newStr[2].toIntOrNull()
+    if (day == null || month == null || year == null
+            || day in 0..daysInMonth(reallyMonth, year))
+        return ""
+    return String.format("%d $month %d", day, year)
 
 }
 
@@ -150,22 +143,19 @@ fun flattenPhoneNumber(phone: String): String {
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 fun bestLongJump(jumps: String): Int {
-    var maxJump = 0
-    val newStr = Regex("""(-+)|(%+)""").replace(jumps, "")
+    var maxJump = 1
+    val newStr = Regex("""(^\s)|(-+)|(%+)|(\s$)""").replace(jumps, "")
             .replace(Regex("""\s+"""), " ").split(" ")
     return try {
         for (i in 0 until newStr.size) {
             val number = newStr.elementAt(i).toInt()
             if (number > maxJump && number != 0) maxJump = number
         }
-        if (maxJump > 0) maxJump
-        else -1
-
+        return maxJump
     } catch (e: Exception) {
         -1
     }
 }
-//Объясните,в чём проблема?(через IntOrNull тоже делал,хотя вроде разницы нет)
 
 /**
  * Сложная
@@ -244,7 +234,7 @@ fun mostExpensive(description: String): String {
     return item
 
 }
-// Очень долго пытался решить через map задачку,возвращать это значение по ключу,который будет максимальным.Но не получалось
+
 
 /**
  * Сложная

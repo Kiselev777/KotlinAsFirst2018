@@ -249,8 +249,16 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = word.toList().all {
  */
 fun extractRepeats(list: List<String>): Map<String, Int> {
     val newMap = mutableMapOf<String, Int>()
-    list.forEach { char -> newMap[char] = list.count { secondChar -> secondChar == char } }
-    return newMap.filterValues { it > 1 }
+    val newMap2 = list.toMutableList()
+    list.toSet().toList().forEach {
+        var numberOfElement = 0
+        while (it in newMap2) {
+            numberOfElement++
+            newMap2.remove(it)
+        }
+        if (numberOfElement > 1) newMap[it] = numberOfElement
+    }
+    return newMap
 }
 
 
@@ -283,10 +291,9 @@ fun hasAnagrams(words: List<String>): Boolean = TODO()
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
-    for (i in 0 until list.size - 1) {
-        for (j in i + 1 until list.size) {
-            if (list[i] + list[j] == number) return i to j
-        }
+    for (i in 0 until list.size) {
+        if (number - list[i] in list && i != list.indexOf(number - list[i]))
+            return i to list.indexOf(number - list[i])
     }
     return -1 to -1
 }
@@ -340,5 +347,3 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     findAns(howManyShoos - 1, sizeCapacity - 1)
     return ans
 }
-//  Я взял алгоритм с интернета,можно ли так?Если да,то проверьте и я буду пытаться исправлять и оптимизировать это решение
-// если нет,то хорошо
