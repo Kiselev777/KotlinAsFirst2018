@@ -165,12 +165,8 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
-    val name = stuff.filter { it -> it.value.first == kind }.minBy { it.value.second }?.key
-    if (name != null)
-        return name
-    return null
-}
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String?=stuff.filter { it -> it.value.first == kind }.minBy { it.value.second }?.key
+
 
 /**
  * Сложная

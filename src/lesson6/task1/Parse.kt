@@ -144,7 +144,7 @@ fun flattenPhoneNumber(phone: String): String {
  */
 fun bestLongJump(jumps: String): Int {
     var maxJump = 1
-    val newStr = Regex("""(^\s*)|(-+)|(%+)|(\s*$)""").replace(jumps, "")
+    val newStr = Regex("""(-+)|(%+)|\^s*""").replace(jumps, "")
             .replace(Regex("""\s+"""), " ").split(" ")
     return try {
         for (i in 0 until newStr.size) {
@@ -262,7 +262,7 @@ fun mostExpensive(description: String): String {
  *
  * Вернуть -1, если roman не является корректным римским числом
  */
-fun fromRoman(roman: String): Int = TODO()
+fun fromRoman(roman: String):Int= TODO()
 
 /**
  * Очень сложная
