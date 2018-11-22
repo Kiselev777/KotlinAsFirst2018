@@ -183,7 +183,7 @@ fun plusMinus(expression: String): Int {
     if (Regex("""(\d+[-+])+""").matches(expression))
         return expression.toInt()
     if ((Regex("""(?:\d+\s*[-+]\s*)+\d+""").matches(expression)) || Regex("""\d+""").matches(expression)
-            || expression.length < 3 && expression.isNotEmpty() && !Regex("""([-+]\s*\d+)+""").matches(expression)) {
+            && expression.isNotEmpty() && !Regex("""([-+]\s*\d+)+""").matches(expression)) {
         val sumOfNumber = expression.split(" ")
         result = sumOfNumber[0].toInt()
         for (i in 1 until sumOfNumber.size step 2) {
