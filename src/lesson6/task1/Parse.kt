@@ -144,7 +144,7 @@ fun flattenPhoneNumber(phone: String): String {
  */
 fun bestLongJump(jumps: String): Int {
     var maxJump = 1
-    val newStr = Regex("""(^\s)|(-+)|(%+)|(\s$)""").replace(jumps, "")
+    val newStr = Regex("""(^\s*)|(-+)|(%+)|(\s*$)""").replace(jumps, "")
             .replace(Regex("""\s+"""), " ").split(" ")
     return try {
         for (i in 0 until newStr.size) {
@@ -182,9 +182,8 @@ fun plusMinus(expression: String): Int {
     var result = 0
     if (Regex("""(\d+[-+])+""").matches(expression))
         return expression.toInt()
-    if(Regex("""([-+]\s*\d+)+""").matches(expression)) throw IllegalArgumentException()
     if ((Regex("""(?:\d+\s*[-+]\s*)+\d+""").matches(expression)) || Regex("""\d+""").matches(expression)
-            || expression.length < 3 && expression.isNotEmpty()) {
+            || expression.length < 3 && expression.isNotEmpty() && !Regex("""([-+]\s*\d+)+""").matches(expression)) {
         val sumOfNumber = expression.split(" ")
         result = sumOfNumber[0].toInt()
         for (i in 1 until sumOfNumber.size step 2) {
