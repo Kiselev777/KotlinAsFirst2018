@@ -143,13 +143,13 @@ fun flattenPhoneNumber(phone: String): String {
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 fun bestLongJump(jumps: String): Int {
-    var maxJump = 1
-    val newStr = Regex("""(-+)|(%+)|\^s*""").replace(jumps, "")
-            .replace(Regex("""\s+"""), " ").split(" ")
     return try {
-        for (i in 0 until newStr.size) {
-            val number = newStr.elementAt(i).toInt()
-            if (number >= maxJump && number != 0) maxJump = number
+        val split = jumps.split(" ", "%", "-").filter { it != "" }.map { it.toInt() }
+        var maxJump = split[0]
+        for (i in 0 until split.size) {
+            if (split[i] > maxJump) {
+                maxJump = split[i]
+            }
         }
         return maxJump
     } catch (e: Exception) {
@@ -262,7 +262,7 @@ fun mostExpensive(description: String): String {
  *
  * Вернуть -1, если roman не является корректным римским числом
  */
-fun fromRoman(roman: String):Int= TODO()
+fun fromRoman(roman: String): Int = TODO()
 
 /**
  * Очень сложная
