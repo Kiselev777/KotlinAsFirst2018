@@ -75,7 +75,25 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    TODO()
+    val outputStream = File(outputName).bufferedWriter()
+    val linesInInpute = File(inputName).readLines()
+    val mapOfMistake = mapOf('Ы' to 'И', 'ы' to 'и', 'Ю' to 'У',
+            'ю' to 'у', 'Я' to 'А', 'я' to 'а')
+    for (i in 0 until linesInInpute.size) {
+        if (linesInInpute[i].length <= 1) {
+            outputStream.write(linesInInpute[i])
+        } else {
+            val char = linesInInpute[i][0].toString()
+            outputStream.write(char)
+            for (j in 1 until linesInInpute[i].length) {
+                if ((linesInInpute[i][j] in mapOfMistake.keys) && (linesInInpute[i][j - 1] in "жЖчЧшШщЩ")) {
+                    outputStream.write(mapOfMistake[linesInInpute[i][j]].toString())
+                } else outputStream.write(linesInInpute[i][j].toString())
+            }
+        }
+        outputStream.newLine()
+    }
+    outputStream.close()
 }
 
 /**
@@ -261,7 +279,7 @@ Suspendisse <s>et elit in enim tempus iaculis</s>.
  * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать не обязательно)
  */
 fun markdownToHtmlSimple(inputName: String, outputName: String) {
-
+TODO()
 }
 
 /**
