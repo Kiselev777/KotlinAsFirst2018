@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson8.task2
 
 /**
@@ -14,6 +15,9 @@ data class Square(val column: Int, val row: Int) {
      */
     fun inside(): Boolean = column in 1..8 && row in 1..8
 
+    private val list = listOf('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h')
+
+
     /**
      * Простая
      *
@@ -21,7 +25,11 @@ data class Square(val column: Int, val row: Int) {
      * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
      * Для клетки не в пределах доски вернуть пустую строку
      */
-    fun notation(): String = TODO()
+    fun notation(): String {
+        val b = list[column - 1].toString() + row.toString()
+        return if (column == 0 || row == 0) ""
+        else b
+    }
 }
 
 /**
@@ -31,7 +39,12 @@ data class Square(val column: Int, val row: Int) {
  * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
  * Если нотация некорректна, бросить IllegalArgumentException
  */
-fun square(notation: String): Square = TODO()
+fun square(notation: String): Square {
+    val list = listOf('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h')
+    return if (Square(list.indexOf(notation[0]) + 1, notation[1].toInt() - '0'.toInt()).inside())
+        Square(list.indexOf(notation[0]) + 1, notation[1].toInt() - '0'.toInt())
+    else throw IllegalArgumentException()
+}
 
 /**
  * Простая

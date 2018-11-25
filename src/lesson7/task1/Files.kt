@@ -114,7 +114,22 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    TODO()
+    val linesInInput = File(inputName).readLines()
+    val outputStream = File(outputName).bufferedWriter()
+    var max = 0
+    linesInInput.forEach { line ->
+        when {
+            line.trim().length > max -> max = line.trim().length
+        }
+    }
+    linesInInput.forEach { line ->
+        when {
+            line.trim().length < max -> outputStream.write(" ".repeat((max - line.trim().length) / 2) + line.trim())
+            else -> outputStream.write(line.trim())
+        }
+        outputStream.newLine()
+    }
+    outputStream.close()
 }
 
 /**
@@ -176,7 +191,6 @@ fun alignFileByWidth(inputName: String, outputName: String) {
     }
     inputStream.close()
 }
-
 
 
 /**
@@ -263,8 +277,13 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
 fun chooseLongestChaoticWord(inputName: String, outputName: String) {
+    //val wordInInput=File(inputName).readLines()
+    //var max=0
+    //var defaultString=""
+    // for(word in wordInInput){
     TODO()
 }
+
 
 /**
  * Сложная
