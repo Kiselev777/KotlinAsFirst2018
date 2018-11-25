@@ -145,8 +145,47 @@ fun centerFile(inputName: String, outputName: String) {
  * 8) Если входной файл удовлетворяет требованиям 1-7, то он должен быть в точности идентичен выходному файлу
  */
 fun alignFileByWidth(inputName: String, outputName: String) {
-    TODO()
+    var correct: String
+    var max = 0
+    val lines = File(inputName).readLines()
+    lines.map { it.trim() }
+    val inputStream = File(outputName).bufferedWriter()
+    lines.forEach { line ->
+        if (line.length > max) {
+            max = line.length
+        }
+    }
+    lines.forEach { line ->
+        val word = line.split(" ").filter { it.isNotEmpty() }.toMutableList()
+        var wordLength = word.joinToString("").length
+        when {
+            word.size <= 1 -> correct = line
+            else -> {
+                while (max > wordLength) for (i in 0 until word.size - 1) {
+                    if (max > wordLength) {
+                        word[i] += " "
+                        wordLength++
+                    }
+                }
+                correct = word.joinToString("")
+            }
+        }
+        inputStream.write(correct)
+        inputStream.newLine()
+    }
+    inputStream.close()
 }
+
+// val correctLine:String
+//var maxLineLength = 0
+//val outputStream = File(outputName).bufferedWriter()
+//val newFile = File(inputName).readLines()
+//newFile.map { it.trim() }
+//for (line in newFile) {
+// if (line.length > maxLineLength)
+//   maxLineLength = line.length
+//  }
+
 
 /**
  * Средняя
@@ -279,7 +318,7 @@ Suspendisse <s>et elit in enim tempus iaculis</s>.
  * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать не обязательно)
  */
 fun markdownToHtmlSimple(inputName: String, outputName: String) {
-TODO()
+    TODO()
 }
 
 /**
