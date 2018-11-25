@@ -79,13 +79,13 @@ fun sibilants(inputName: String, outputName: String) {
     val linesInInpute = File(inputName).readLines()
     val mapOfMistake = mapOf('Ы' to 'И', 'ы' to 'и', 'Ю' to 'У',
             'ю' to 'у', 'Я' to 'А', 'я' to 'а')
-    for (i in 0 until linesInInpute.size) {
+    (0 until linesInInpute.size).forEach { i ->
         if (linesInInpute[i].length <= 1) {
             outputStream.write(linesInInpute[i])
         } else {
             val char = linesInInpute[i][0].toString()
             outputStream.write(char)
-            for (j in 1 until linesInInpute[i].length) {
+            (1 until linesInInpute[i].length).forEach { j ->
                 if ((linesInInpute[i][j] in mapOfMistake.keys) && (linesInInpute[i][j - 1] in "жЖчЧшШщЩ")) {
                     outputStream.write(mapOfMistake[linesInInpute[i][j]].toString())
                 } else outputStream.write(linesInInpute[i][j].toString())
@@ -149,8 +149,8 @@ fun alignFileByWidth(inputName: String, outputName: String) {
     val inputStream = File(outputName).bufferedWriter()
     var max = 0
     linesInInput.forEach { line ->
-        if (line.trim().length > max) {
-            max = line.trim().length
+        when {
+            line.trim().length > max -> max = line.trim().length
         }
     }
     linesInInput.forEach { line ->
@@ -161,9 +161,11 @@ fun alignFileByWidth(inputName: String, outputName: String) {
             word.size <= 1 -> correct = line.trim()
             else -> {
                 while (max > wordLength) for (i in 0 until word.size - 1) {
-                    if (max > wordLength) {
-                        word[i] += " "
-                        wordLength++
+                    when {
+                        max > wordLength -> {
+                            word[i] += " "
+                            wordLength++
+                        }
                     }
                 }
                 correct = word.joinToString("")
