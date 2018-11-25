@@ -2,7 +2,6 @@
 
 package lesson4.task1
 
-import com.sun.org.apache.xalan.internal.lib.ExsltMath.power
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
 import java.lang.Math.pow
@@ -336,5 +335,38 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+    val listOfOnes = listOf("", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
+    val listOfOnesSecond = listOf("", "одна", "две", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
+    val postfix = getTheRussian(n, listOfOnes)
+    if (n < 1000) return postfix
+    val prefix = getTheRussian(n / 1000, listOfOnesSecond)
+    val thousend = n / 1000 % 100
+    val thousendResult: String
+    if (thousend in 11..19) thousendResult = "тысяч"
+    else if (thousend % 10 == 1) thousendResult = "тысяча"
+    else if (thousend % 10 in 2..4) thousendResult = "тысячи"
+    else thousendResult = "тысяч"
+    return "$prefix $thousendResult $postfix".trim()
+}
+
+fun getTheRussian(n: Int, last_number: List<String>): String {
+    val listOfTens = listOf("", "десять", "двадцать", "тридцать", "сорок", "пятьдесят",
+            "шестьдесят", "семьдесят", "восемьдесят", "девяносто")
+    val listOfTen = listOf("", "одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать",
+            "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать")
+    val listOfHunds = listOf("", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
+    val hundreds = listOfHunds[n / 100 % 10]
+    val number: String
+    val tens: String
+    if (n % 100 in 11..19) {
+        number = ""
+        tens = listOfTen[n % 10]
+    } else {
+        number = last_number[n % 10]
+        tens = listOfTens[n / 10 % 10]
+    }
+    return "$hundreds $tens $number".trim().replace("  ", " ")
+}
+
 
