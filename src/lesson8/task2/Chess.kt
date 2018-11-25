@@ -15,8 +15,6 @@ data class Square(val column: Int, val row: Int) {
      */
     fun inside(): Boolean = column in 1..8 && row in 1..8
 
-    private val list = listOf('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h')
-
 
     /**
      * Простая
@@ -25,27 +23,16 @@ data class Square(val column: Int, val row: Int) {
      * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
      * Для клетки не в пределах доски вернуть пустую строку
      */
-    fun notation(): String {
-        val b = list[column - 1].toString() + row.toString()
-        return if (inside()) b
-        else ""
-    }
-}
+    fun notation(): String = TODO()
 
-/**
- * Простая
- *
- * Создаёт клетку по строковой нотации.
- * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
- * Если нотация некорректна, бросить IllegalArgumentException
- */
-fun square(notation: String): Square {
-    val list = listOf('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h')
-    val result = Square(list.indexOf(notation[0]) + 1, notation[1].toInt() - '0'.toInt())
-    if (result.inside()) return result else {
-        throw IllegalArgumentException()
-    }
-
+    /**
+     * Простая
+     *
+     * Создаёт клетку по строковой нотации.
+     * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
+     * Если нотация некорректна, бросить IllegalArgumentException
+     */
+    fun square(notation: String): Square = TODO()
 }
 
 /**
