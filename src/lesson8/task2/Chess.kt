@@ -27,8 +27,8 @@ data class Square(val column: Int, val row: Int) {
      */
     fun notation(): String {
         val b = list[column - 1].toString() + row.toString()
-        return if (column == 0 || row == 0) ""
-        else b
+        return if (inside()) b
+        else ""
     }
 }
 
@@ -41,9 +41,11 @@ data class Square(val column: Int, val row: Int) {
  */
 fun square(notation: String): Square {
     val list = listOf('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h')
-    return if (Square(list.indexOf(notation[0]) + 1, notation[1].toInt() - '0'.toInt()).inside())
-        Square(list.indexOf(notation[0]) + 1, notation[1].toInt() - '0'.toInt())
-    else throw IllegalArgumentException()
+    val result = Square(list.indexOf(notation[0]) + 1, notation[1].toInt() - '0'.toInt())
+    if (result.inside()) return result else {
+        throw IllegalArgumentException()
+    }
+
 }
 
 /**
