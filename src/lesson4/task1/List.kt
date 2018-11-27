@@ -343,10 +343,10 @@ fun russian(n: Int): String {
     val prefix = getTheRussian(n / 1000, listOfOnesSecond)
     val thousend = n / 1000 % 100
     val thousendResult: String
-    if (thousend in 11..19) thousendResult = "тысяч"
-    else if (thousend % 10 == 1) thousendResult = "тысяча"
-    else if (thousend % 10 in 2..4) thousendResult = "тысячи"
-    else thousendResult = "тысяч"
+    thousendResult = if (thousend in 11..19) "тысяч"
+    else if (thousend % 10 == 1) "тысяча"
+    else if (thousend % 10 in 2..4) "тысячи"
+    else "тысяч"
     return "$prefix $thousendResult $postfix".trim()
 }
 
@@ -363,8 +363,8 @@ fun getTheRussian(n: Int, last_number: List<String>): String {
         number = ""
         tens = listOfTen[n % 10]
     } else {
-        number = last_number[n % 10]
-        tens = listOfTens[n / 10 % 10]
+        number=last_number[n % 10]
+        tens=listOfTens[n / 10 % 10]
     }
     return "$hundreds $tens $number".trim().replace("  ", " ")
 }
