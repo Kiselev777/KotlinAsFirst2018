@@ -170,8 +170,8 @@ fun alignFileByWidth(inputName: String, outputName: String) {
         }
     }
     linesInInput.forEach { line ->
-        var correct: String
-        val word = line.split(" ").filter { it.isNotEmpty() }.toMutableList()
+        val correct: String
+        val word = line.split(" ").filter { (it.isNotEmpty()) }.toMutableList()
         var wordLength = word.joinToString("").length
         when {
             word.size <= 1 -> correct = line.trim()
@@ -286,7 +286,7 @@ fun chooseLongestChaoticWord(inputName: String, outputName: String) {
         if (word.toLowerCase().toSet().size == word.length) {
             if (word.length >= max) max = word.length
         }
-        if(word.toLowerCase().toSet().size == max) result+=word
+        if (word.toLowerCase().toSet().size == max) result += word
     }
     outputStream.write(result.joinToString(", "))
     outputStream.close()
