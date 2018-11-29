@@ -165,7 +165,8 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String?=stuff.filter { it -> it.value.first == kind }.minBy { it.value.second }?.key
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String):
+        String? = stuff.filter { it -> it.value.first == kind }.minBy { it.value.second }?.key
 
 
 /**
@@ -247,16 +248,10 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = chars.toSet().map {
  */
 fun extractRepeats(list: List<String>): Map<String, Int> {
     val newMap = mutableMapOf<String, Int>()
-    val newMap2 = list.toMutableList()
-    list.toSet().toList().forEach {
-        var numberOfElement = 0
-        while (it in newMap2) {
-            numberOfElement++
-            newMap2.remove(it)
-        }
-        if (numberOfElement > 1) newMap[it] = numberOfElement
+    (0..list.lastIndex).forEach { i ->
+        newMap[list[i]] = newMap.getOrDefault(list[i], 0) + 1
     }
-    return newMap
+    return newMap.filter { it.value > 1 }
 }
 
 
@@ -288,10 +283,14 @@ fun hasAnagrams(words: List<String>): Boolean = TODO()
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
-    (0 until list.size).forEach { i ->
-        when {
-            number - list[i] in list && i != list.indexOf(number - list[i]) -> return i to list.indexOf(number - list[i])
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int?, Int> {
+    val newMap = mutableMapOf<Int, Int>()
+    list.withIndex().forEach { (index, value) ->
+        val first = number - value
+        val second = newMap[first]
+        when (second) {
+            null -> newMap[value] = index
+            else -> return second to index
         }
     }
     return -1 to -1
