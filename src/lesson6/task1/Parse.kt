@@ -106,10 +106,10 @@ fun dateDigitToStr(digital: String): String {
     val reallyMonth = newStr[1].toIntOrNull()
     val day = newStr[0].toIntOrNull()
     val year = newStr[2].toIntOrNull()
-    if (day != null && month != null && year != null
+    return if (day != null && month != null && year != null
             && day in 1..daysInMonth(reallyMonth!!, year))
-        return String.format("%d $month %d", day, year)
-    else return ""
+        String.format("%d $month %d", day, year)
+    else ""
 
 }
 
