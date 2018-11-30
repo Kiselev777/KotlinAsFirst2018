@@ -143,18 +143,17 @@ fun flattenPhoneNumber(phone: String): String {
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 fun bestLongJump(jumps: String): Int {
-    return try {
-        val split = jumps.split(" ", "%", "-").filter { it != "" }.map { it.toInt() }
-        var maxJump = split[0]
-        for (i in 0 until split.size) {
-            if (split[i] > maxJump) {
-                maxJump = split[i]
-            }
+    val falseStr = jumps.replace(Regex("""\s+"""), "")
+    if (!Regex("""(\d+|-|%)+""").matches(falseStr) || Regex("""[-%]+""").matches(falseStr))
+        return -1
+    val split = jumps.split(" ", "%", "-").filter { it != "" }.map { it.toInt() }
+    var maxJump = split[0]
+    for (i in 0 until split.size) {
+        if (split[i] > maxJump) {
+            maxJump = split[i]
         }
-        return maxJump
-    } catch (e: Exception) {
-        -1
     }
+    return maxJump
 }
 
 /**
@@ -207,9 +206,10 @@ fun plusMinus(expression: String): Int {
 fun firstDuplicateIndex(str: String): Int {
     val newStr = str.toLowerCase().split(" ")
     var index = 0
-    if (newStr.isNotEmpty()) for (i in 0 until newStr.size - 1)
-        if (newStr[i] == newStr[i + 1]) return index
-        else index += newStr[i].length + 1
+    if (newStr.isNotEmpty())
+        for (i in 0 until newStr.size - 1)
+            if (newStr[i] == newStr[i + 1]) return index
+            else index += newStr[i].length + 1
     return -1
 }
 
@@ -234,10 +234,10 @@ fun mostExpensive(description: String): String {
             try {
                 for (i in 0 until newStr.size) {
                     val name = newStr[i].split(' ').filter { it != "" }
-                    val coast = name[1].toDouble()
+                    val cost = name[1].toDouble()
                     if (name.size != 2) return ""
-                    else if (coast >= max) {
-                        max = coast
+                    else if (cost >= max) {
+                        max = cost
                         item = name[0]
                     }
                 }
