@@ -3,10 +3,7 @@
 package lesson8.task1
 
 import lesson1.task1.sqr
-import kotlin.math.PI
-import kotlin.math.cos
-import kotlin.math.sin
-import kotlin.math.sqrt
+import kotlin.math.*
 
 /**
  * Точка на плоскости
@@ -109,7 +106,22 @@ data class Segment(val begin: Point, val end: Point) {
  * Дано множество точек. Вернуть отрезок, соединяющий две наиболее удалённые из них.
  * Если в множестве менее двух точек, бросить IllegalArgumentException
  */
-fun diameter(vararg points: Point): Segment = TODO()
+fun diameter(vararg points: Point): Segment {
+    if (points.size < 2) throw IllegalAccessException("")
+    var max = 0.0
+    var first = Point(0.0, 0.0)
+    var second = Point(0.0, 0.0)
+    for (i in points) {
+        for (j in points) {
+            if (i.distance(j) > max && i != j) {
+                first = i
+                second = j
+                max = i.distance(j)
+            }
+        }
+    }
+    return Segment(first, second)
+}
 
 /**
  * Простая
@@ -117,7 +129,11 @@ fun diameter(vararg points: Point): Segment = TODO()
  * Построить окружность по её диаметру, заданному двумя точками
  * Центр её должен находиться посередине между точками, а радиус составлять половину расстояния между ними
  */
-fun circleByDiameter(diameter: Segment): Circle = TODO()
+fun circleByDiameter(diameter: Segment): Circle {
+    val center = Pair((diameter.begin.x + diameter.end.x) / 2, (diameter.begin.y + diameter.end.y) / 2)
+    val r = (diameter.begin.distance(diameter.end)) / 2
+    return Circle(Point(center.first, center.second), r)
+}
 
 /**
  * Прямая, заданная точкой point и углом наклона angle (в радианах) по отношению к оси X.
@@ -140,6 +156,7 @@ class Line private constructor(val b: Double, val angle: Double) {
      */
     fun crossPoint(other: Line): Point = TODO()
 
+    //что-то не понимаю,как решить это
     override fun equals(other: Any?) = other is Line && angle == other.angle && b == other.b
 
     override fun hashCode(): Int {
@@ -156,14 +173,17 @@ class Line private constructor(val b: Double, val angle: Double) {
  *
  * Построить прямую по отрезку
  */
-fun lineBySegment(s: Segment): Line = TODO()
+fun lineBySegment(s: Segment): Line {
+    val angel = atan((s.end.y - s.begin.y) / (s.end.x - s.begin.x))
+    return Line(s.begin, angel)
+}
 
 /**
  * Средняя
  *
  * Построить прямую по двум точкам
  */
-fun lineByPoints(a: Point, b: Point): Line = TODO()
+fun lineByPoints(a: Point, b: Point): Line = lineBySegment(Segment(a, b))
 
 /**
  * Сложная
