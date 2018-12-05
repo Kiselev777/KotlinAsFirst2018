@@ -193,7 +193,11 @@ fun lineByPoints(a: Point, b: Point): Line = lineBySegment(Segment(a, b))
  *
  * Построить серединный перпендикуляр по отрезку или по двум точкам
  */
-fun bisectorByPoints(a: Point, b: Point): Line = TODO()
+fun bisectorByPoints(a: Point, b: Point): Line {
+    val angel = atan((b.y - a.y) / (b.x - a.x)) + PI / 2
+    val point = Point((a.x + b.x) / 2, (a.y + b.y) / 2)
+    return Line(point, angel)
+}
 
 /**
  * Средняя
@@ -201,7 +205,29 @@ fun bisectorByPoints(a: Point, b: Point): Line = TODO()
  * Задан список из n окружностей на плоскости. Найти пару наименее удалённых из них.
  * Если в списке менее двух окружностей, бросить IllegalArgumentException
  */
-fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> = TODO()
+fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
+    var list = mutableListOf<Circle>()
+    var min = Double.MAX_VALUE
+    if (circles.size > 2) {
+        for (i in 0 until circles.size - 1)
+            for (j in i + 1 until circles.size) {
+                if (circles[i].distance(circles[j]) < min && list.isEmpty()) {
+                    min = circles[i].distance(circles[j])
+                    list.add(circles[i])
+                    list.add(circles[j])
+                } else {
+                    if (list.isNotEmpty() && circles[i].distance(circles[j]) < min) {
+                        min = circles[i].distance(circles[j])
+                        list.clear()
+                        list.add(circles[i])
+                        list.add(circles[j])
+                    }
+                }
+            }
+
+    } else throw IllegalAccessException()
+    return Pair(list[0], list[1])
+}
 
 /**
  * Сложная
@@ -212,7 +238,30 @@ fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> = TODO()
  * (построить окружность по трём точкам, или
  * построить окружность, описанную вокруг треугольника - эквивалентная задача).
  */
-fun circleByThreePoints(a: Point, b: Point, c: Point): Circle = TODO()
+fun circleByThreePoints(a: Point, b: Point, c: Point): Circle {
+    val tempA1 = a.x - b.x
+    val tempB1 = a.y - b.y
+    val tempC1 = (a.x * a.x - b.x * b.x + a.y * a.y - b.y * b.y) / 2
+    val tempA2 = c.x - b.x
+    val tempB2 = c.y - b.y
+    val tempC2 = (c.x * c.x - b.x * b.x + c.y * c.y - b.y * b.y) / 2
+    val first: Double
+    val second: Double
+    val x = tempA1 * tempB2 - tempA2 * tempB1
+    when (x) {
+        0.0 -> {
+            first = a.x
+            second = a.y
+
+        }
+        else -> {
+            first = (tempC1 * tempB2 - tempC2 * tempB1) / x
+            second = (tempA1 * tempC2 - tempA2 * tempC1) / x
+        }
+    }
+    return Circle(Point(first, second), Point(first, second).distance(a))
+
+}
 
 /**
  * Очень сложная
