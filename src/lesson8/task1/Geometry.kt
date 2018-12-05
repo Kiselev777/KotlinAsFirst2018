@@ -212,7 +212,7 @@ fun bisectorByPoints(a: Point, b: Point): Line {
 fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
     var circleFirst = circles[0]
     var circleSecond = circles[1]
-    var min = circleFirst.distance(circleSecond)
+    var min = Double.MIN_VALUE
     if (circles.size > 2) {
         for (i in 0 until circles.size - 1)
             for (j in i + 1 until circles.size) {
