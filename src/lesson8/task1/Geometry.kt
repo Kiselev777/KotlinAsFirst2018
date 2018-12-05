@@ -194,7 +194,11 @@ fun lineByPoints(a: Point, b: Point): Line = lineBySegment(Segment(a, b))
  * Построить серединный перпендикуляр по отрезку или по двум точкам
  */
 fun bisectorByPoints(a: Point, b: Point): Line {
-    val angel = atan((b.y - a.y) / (b.x - a.x)) + PI / 2
+    var angel = atan((b.y - a.y) / (b.x - a.x)) + PI / 2
+    if (angel < 0) angel += PI
+    else IllegalAccessException()
+    if (angel == PI) angel -= PI
+    else IllegalAccessException()
     val point = Point((a.x + b.x) / 2, (a.y + b.y) / 2)
     return Line(point, angel)
 }
@@ -206,27 +210,21 @@ fun bisectorByPoints(a: Point, b: Point): Line {
  * Если в списке менее двух окружностей, бросить IllegalArgumentException
  */
 fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
-    var list = mutableListOf<Circle>()
-    var min = Double.MAX_VALUE
+    var circleFirst = circles[0]
+    var circleSecond = circles[1]
+    var min = circleFirst.distance(circleSecond)
     if (circles.size > 2) {
         for (i in 0 until circles.size - 1)
             for (j in i + 1 until circles.size) {
-                if (circles[i].distance(circles[j]) < min && list.isEmpty()) {
+                if (circles[i].distance(circles[j]) < min) {
                     min = circles[i].distance(circles[j])
-                    list.add(circles[i])
-                    list.add(circles[j])
-                } else {
-                    if (list.isNotEmpty() && circles[i].distance(circles[j]) < min) {
-                        min = circles[i].distance(circles[j])
-                        list.clear()
-                        list.add(circles[i])
-                        list.add(circles[j])
-                    }
+                    circleFirst = circles[i]
+                    circleSecond = circles[j]
                 }
             }
 
     } else throw IllegalAccessException()
-    return Pair(list[0], list[1])
+    return circleFirst to circleSecond
 }
 
 /**
