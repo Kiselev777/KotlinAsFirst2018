@@ -156,7 +156,6 @@ class Line private constructor(val b: Double, val angle: Double) {
      */
     fun crossPoint(other: Line): Point = TODO()
 
-    //что-то не понимаю,как решить это
     override fun equals(other: Any?) = other is Line && angle == other.angle && b == other.b
 
     override fun hashCode(): Int {
@@ -173,7 +172,14 @@ class Line private constructor(val b: Double, val angle: Double) {
  *
  * Построить прямую по отрезку
  */
-fun lineBySegment(s: Segment): Line = Line(s.begin, atan2((s.end.y - s.begin.y), (s.end.x - s.begin.x)))
+fun lineBySegment(s: Segment): Line {
+    var angel = atan((s.end.y - s.begin.y) / (s.end.x - s.begin.x))
+    if (angel < 0) angel += PI
+    else IllegalAccessException()
+    if (angel == PI) angel -= PI
+    else IllegalAccessException()
+    return Line(s.begin, angel)
+}
 
 /**
  * Средняя
