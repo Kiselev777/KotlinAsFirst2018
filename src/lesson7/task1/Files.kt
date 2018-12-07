@@ -56,8 +56,9 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  */
 fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
     val mapOfString = mutableMapOf<String, Int>()
-    for (i in 0 until substrings.size) mapOfString[substrings[i]] = Regex(substrings[i].toLowerCase())
-            .findAll(File(inputName).readLines().joinToString(separator = " ").toLowerCase()).count()
+    for (i in 0 until substrings.size)
+        mapOfString[substrings[i]] = Regex(substrings[i].toLowerCase())
+                .findAll(File(inputName).readLines().joinToString(separator = " ").toLowerCase()).count()
     return mapOfString
 }
 
@@ -117,12 +118,7 @@ fun sibilants(inputName: String, outputName: String) {
 fun centerFile(inputName: String, outputName: String) {
     val linesInInput = File(inputName).readLines()
     val outputStream = File(outputName).bufferedWriter()
-    var max = 0
-    linesInInput.forEach { line ->
-        when {
-            line.trim().length > max -> max = line.trim().length
-        }
-    }
+    val max = maxLineLength(inputName)
     linesInInput.forEach { line ->
         when {
             line.trim().length < max -> outputStream.write(" ".repeat((max - line.trim().length) / 2) + line.trim())
@@ -131,6 +127,17 @@ fun centerFile(inputName: String, outputName: String) {
         outputStream.newLine()
     }
     outputStream.close()
+}
+
+fun maxLineLength(inputName: String): Int {
+    val linesInInput = File(inputName).readLines()
+    var max = 0
+    linesInInput.forEach { line ->
+        when {
+            line.trim().length > max -> max = line.trim().length
+        }
+    }
+    return max
 }
 
 /**
@@ -163,12 +170,7 @@ fun centerFile(inputName: String, outputName: String) {
 fun alignFileByWidth(inputName: String, outputName: String) {
     val linesInInput = File(inputName).readLines()
     val inputStream = File(outputName).bufferedWriter()
-    var max = 0
-    linesInInput.forEach { line ->
-        when {
-            line.trim().length > max -> max = line.trim().length
-        }
-    }
+    val max = maxLineLength(inputName)
     linesInInput.forEach { line ->
         val correct: String
         val word = line.split(" ").filter { (it.isNotEmpty()) }.toMutableList()
@@ -176,14 +178,15 @@ fun alignFileByWidth(inputName: String, outputName: String) {
         when {
             word.size <= 1 -> correct = line.trim()
             else -> {
-                while (max > wordLength) for (i in 0 until word.size - 1) {
-                    when {
-                        max > wordLength -> {
-                            word[i] += " "
-                            wordLength++
+                while (max > wordLength)
+                    for (i in 0 until word.size - 1) {
+                        when {
+                            max > wordLength -> {
+                                word[i] += " "
+                                wordLength++
+                            }
                         }
                     }
-                }
                 correct = word.joinToString("")
             }
         }
@@ -280,13 +283,18 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
 fun chooseLongestChaoticWord(inputName: String, outputName: String) {
     val outputStream = File(outputName).bufferedWriter()
     val wordInInput = File(inputName).readLines()
-    var max = 0
-    var result = setOf<String>()
-    for (word in wordInInput) {
+    var max = -1
+    val result = mutableSetOf<String>()
+    wordInInput.forEach { word ->
         if (word.toLowerCase().toSet().size == word.length) {
-            if (word.length >= max) max = word.length
+            if (word.length >= max)
+                max = word.length
+
         }
-        if (word.toLowerCase().toSet().size == max) result += word
+    }
+    wordInInput.forEach { word ->
+        if (word.toLowerCase().toSet().size == max)
+            result.add(word)
     }
     outputStream.write(result.joinToString(", "))
     outputStream.close()

@@ -72,13 +72,12 @@ fun main(args: Array<String>) {
  * входными данными.
  */
 fun dateStrToDigit(str: String): String {
-
-    val mapOfMonth = mapOf("января" to 1, "февраля" to 2, "марта" to 3,
-            "апреля" to 4, "мая" to 5, "июня" to 6, "июля" to 7
-            , "августа" to 8, "сентября" to 9, "октября" to 10, "ноября" to 11, "декабря" to 12)
+    val listOfMonth = listOf("января", "февраля", "марта",
+            "апреля", "мая", "июня", "июля"
+            , "августа", "сентября", "октября", "ноября", "декабря")
     val newStr = str.split(" ")
     if (newStr.size != 3) return ""
-    val month = mapOfMonth.get(newStr[1]) ?: 0
+    val month = listOfMonth.indexOf(newStr[1]) + 1
     val day = newStr[0].toIntOrNull() ?: 0
     val year = newStr[2].toIntOrNull()
     if (month == 0 || year == null || day !in 1..daysInMonth(month, year)) return ""
@@ -96,18 +95,17 @@ fun dateStrToDigit(str: String): String {
  * входными данными
  */
 fun dateDigitToStr(digital: String): String {
-
-    val mapOfMonth = mapOf("01" to "января", "02" to "февраля", "03" to "марта",
-            "04" to "апреля", "05" to "мая", "06" to "июня", "07" to "июля"
-            , "08" to "августа", "09" to "сентября", "10" to "октября", "11" to "ноября", "12" to "декабря")
+    val listOfMonth = listOf("января", "февраля", "марта",
+            "апреля", "мая", "июня", "июля"
+            , "августа", "сентября", "октября", "ноября", "декабря")
     val newStr = digital.split(".")
+    if (newStr[1].toIntOrNull() == null || newStr[1].toInt() !in 1..12) return ""
     if (newStr.size != 3) return ""
-    val month = mapOfMonth.get(newStr[1])
+    val month = listOfMonth[newStr[1].toInt() - 1]
     val reallyMonth = newStr[1].toIntOrNull()
     val day = newStr[0].toIntOrNull()
     val year = newStr[2].toIntOrNull()
-    return if (day != null && month != null && year != null
-            && day in 1..daysInMonth(reallyMonth!!, year))
+    return if (month != "" && day != null && year != null && day in 1..daysInMonth(reallyMonth!!, year))
         String.format("%d $month %d", day, year)
     else ""
 
@@ -144,7 +142,7 @@ fun flattenPhoneNumber(phone: String): String {
  */
 fun bestLongJump(jumps: String): Int {
     val falseStr = jumps.replace(Regex("""\s+"""), "")
-    if (!Regex("""(\d+|-|%)+""").matches(falseStr) || Regex("""[-%]+""").matches(falseStr))
+    if (!Regex("""\d+(\d+|-|%)+""").matches(falseStr) || Regex("""[-%]+""").matches(falseStr))
         return -1
     val split = jumps.split(" ", "%", "-").filter { it != "" }.map { it.toInt() }
     var maxJump = split[0]
@@ -184,10 +182,15 @@ fun plusMinus(expression: String): Int {
     if ((Regex("""(?:\d+\s*[-+]\s*)+\d+""").matches(expression)) || Regex("""\d+""").matches(expression)
             && expression.isNotEmpty() && !Regex("""([-+]\s*\d+)+""").matches(expression)) {
         val sumOfNumber = expression.split(" ")
-        result = sumOfNumber[0].toInt()
-        for (i in 1 until sumOfNumber.size step 2) {
-            if (sumOfNumber[i] == "+") result += sumOfNumber[i + 1].toInt()
-            else if (sumOfNumber[i] == "-") result -= sumOfNumber[i + 1].toInt()
+        if (sumOfNumber.size % 2 != 0)
+        //при правильном вводе количество жлементов в заспличенной строке всегда будет равняться нечётному числу
+        //этой проверкой я смогу поймать тот эксепшен,который вы написали
+        {
+            result = sumOfNumber[0].toInt()
+            for (i in 1 until sumOfNumber.size step 2) {
+                if (sumOfNumber[i] == "+") result += sumOfNumber[i + 1].toInt()
+                else if (sumOfNumber[i] == "-") result -= sumOfNumber[i + 1].toInt()
+            }
         }
     } else throw IllegalArgumentException()
     return result
@@ -226,24 +229,23 @@ fun firstDuplicateIndex(str: String): Int {
  * Все цены должны быть больше либо равны нуля.
  */
 fun mostExpensive(description: String): String {
+    if (!Regex("""([а-яА-Я]+\s\d+\.?\d+?;\s)*[а-яА-Я]+\s\d+\.?\d+?""").matches(description))
+        return ""
     var item = ""
     if (description.any { it.toString() in "0".."9" }) {
         val newStr = description.split(';')
         var max = 0.0
         if (newStr.isNotEmpty()) {
-            try {
-                for (i in 0 until newStr.size) {
-                    val name = newStr[i].split(' ').filter { it != "" }
-                    val cost = name[1].toDouble()
-                    if (name.size != 2) return ""
-                    else if (cost >= max) {
-                        max = cost
-                        item = name[0]
-                    }
+            for (i in 0 until newStr.size) {
+                val name = newStr[i].split(' ').filter { it != "" }
+                val cost = name[1].toDouble()
+                if (name.size != 2) return ""
+                else if (cost >= max) {
+                    max = cost
+                    item = name[0]
                 }
-            } catch (e: NumberFormatException) {
-                return ""
             }
+
         }
     }
     return item
