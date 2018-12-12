@@ -142,7 +142,7 @@ fun flattenPhoneNumber(phone: String): String {
  */
 fun bestLongJump(jumps: String): Int {
     val falseStr = jumps.replace(Regex("""\s+"""), "")
-    if (!Regex("""\d+(\d+|-|%)+""").matches(falseStr) || Regex("""[-%]+""").matches(falseStr))
+    if (!Regex("""(\d+|-|%)+""").matches(falseStr) || Regex("""[-%]+""").matches(falseStr))
         return -1
     val split = jumps.split(" ", "%", "-").filter { it != "" }.map { it.toInt() }
     var maxJump = split[0]
@@ -229,8 +229,6 @@ fun firstDuplicateIndex(str: String): Int {
  * Все цены должны быть больше либо равны нуля.
  */
 fun mostExpensive(description: String): String {
-    if (!Regex("""([а-яА-Я]+\s\d+\.?\d+?;\s)*[а-яА-Я]+\s\d+\.?\d+?""").matches(description))
-        return ""
     var item = ""
     if (description.any { it.toString() in "0".."9" }) {
         val newStr = description.split(';')
@@ -238,11 +236,13 @@ fun mostExpensive(description: String): String {
         if (newStr.isNotEmpty()) {
             for (i in 0 until newStr.size) {
                 val name = newStr[i].split(' ').filter { it != "" }
-                val cost = name[1].toDouble()
-                if (name.size != 2) return ""
-                else if (cost >= max) {
-                    max = cost
-                    item = name[0]
+                val cost = name[1].toDoubleOrNull()
+                if (name.size != 2 && cost == null) return ""
+                else if (cost != null) {
+                    if (cost >= max) {
+                        max = cost
+                        item = name[0]
+                    }
                 }
             }
 
