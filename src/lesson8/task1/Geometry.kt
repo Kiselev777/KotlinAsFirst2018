@@ -175,11 +175,12 @@ class Line private constructor(val b: Double, val angle: Double) {
 fun lineBySegment(s: Segment): Line {
     var angel = atan((s.end.y - s.begin.y) / (s.end.x - s.begin.x))
     if (angel < 0) angel += PI
-    else if (angel == PI) angel -= PI
     else IllegalAccessException()
-    if (angel == 0.0) angel = 0.0
+    if (angel == PI) angel -= PI
+    else IllegalAccessException()
     return Line(s.begin, angel)
 }
+
 
 /**
  * Средняя
