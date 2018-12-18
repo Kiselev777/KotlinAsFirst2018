@@ -321,19 +321,24 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     val sizeCapacity = capacity + 1
     val howManyShoos = treasures.size + 1
     val a: Array<Array<Int>> = Array(howManyShoos) { Array(sizeCapacity) { 0 } }
-    var n: Int
-    var n2: Int
+    var weightSubject: Int
+    var priceSubject: Int
     for (i in 0 until howManyShoos)
         a[i][0] = 0
+    // зануляем все эелементы массива,чтобы впоследсвтии корректно заполнить
     for (i in 0 until sizeCapacity)
         a[0][i] = 0
     for (i in 1 until howManyShoos) for (j in 1 until sizeCapacity) {
-        n = treasures.values.toList()[i - 1].first
-        n2 = treasures.values.toList()[i - 1].second
+        weightSubject = treasures.values.toList()[i - 1].first
+        //достаём вес сокровища
+        priceSubject = treasures.values.toList()[i - 1].second
+        // достаём цену сокровища
         a[i][j] =
-                if (n <= j) max(a[i - 1][j], a[i - 1][j - n] + n2)
+                if (weightSubject <= j) max(a[i - 1][j], a[i - 1][j - weightSubject] + priceSubject)
                 else a[i - 1][j]
+        //проверяем для каждого предмета,можем ли мы его положить в рюкзак
     }
+    // с помощь рекурсивной функциии находим набор предметов,которые мы положим в наш рюкзак
     fun findAns(k: Int, s: Int) {
         if (a[k][s] == 0) return
         if (a[k - 1][s] == a[k][s]) findAns(k - 1, s)
@@ -345,3 +350,5 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     findAns(howManyShoos - 1, sizeCapacity - 1)
     return ans
 }
+// если честно,то уже совесем не помню не помню эту задачу(я открыл сайт и ещё раз попытался разобраться,надо было сразу писать код с комментариями)
+//вроде я что-то поправил

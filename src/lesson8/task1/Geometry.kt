@@ -182,14 +182,14 @@ fun checkAngel(angel: Double): Double {
  */
 fun lineBySegment(s: Segment): Line {
     var angel = atan((s.end.y - s.begin.y) / (s.end.x - s.begin.x))
-   angel= checkAngel(angel)
+    angel = checkAngel(angel)
     return Line(s.begin, angel)
 }
 
 
 /**
  * Средняя
- 111111111111*
+111111111111*
  * Построить прямую по двум точкам
  */
 fun lineByPoints(a: Point, b: Point): Line = lineBySegment(Segment(a, b))
@@ -201,7 +201,7 @@ fun lineByPoints(a: Point, b: Point): Line = lineBySegment(Segment(a, b))
  */
 fun bisectorByPoints(a: Point, b: Point): Line {
     var angel = atan((b.y - a.y) / (b.x - a.x)) + PI / 2
-    angel= checkAngel(angel)
+    angel = checkAngel(angel)
     val point = Point((a.x + b.x) / 2, (a.y + b.y) / 2)
     return Line(point, angel)
 }

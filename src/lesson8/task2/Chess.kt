@@ -15,8 +15,6 @@ data class Square(val column: Int, val row: Int) {
      */
     fun inside(): Boolean = column in 1..8 && row in 1..8
 
-    val list = listOf('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h')
-
 
     /**
      * Простая
@@ -26,7 +24,7 @@ data class Square(val column: Int, val row: Int) {
      * Для клетки не в пределах доски вернуть пустую строку
      */
     fun notation(): String = if (!inside()) ""
-    else list[column - 1] + row.toString()
+    else (column - 1 + "a".toInt()).toChar() + row.toString()
 }
 
 /**
@@ -37,8 +35,8 @@ data class Square(val column: Int, val row: Int) {
  * Если нотация некорректна, бросить IllegalArgumentException
  */
 fun square(notation: String): Square {
-    if (notation.length != 2 || notation[0].toString() !in "a".."h" || notation[1].toString() !in "1".."8")
-        throw IllegalAccessException()
+    if (notation.length != 2 || notation[0].toString() !in "a".."h" || notation[1].toInt() in 1..8)
+        throw IllegalArgumentException()
     val list = listOf('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h')
     return Square(list.indexOf(notation[0]) + 1, notation[1].toInt() - '0'.toInt())
 }
@@ -90,7 +88,6 @@ fun rookMoveNumber(start: Square, end: Square): Int {
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
 fun rookTrajectory(start: Square, end: Square): List<Square> = TODO()
-
 
 
 /**
