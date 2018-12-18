@@ -86,7 +86,7 @@ data class Circle(val center: Point, val radius: Double) {
      *
      * Вернуть true, если и только если окружность содержит данную точку НА себе или ВНУТРИ себя
      */
-    fun contains(p: Point): Boolean = sqr(p.x - center.x) + sqr(p.y - center.y) < sqr(radius)
+    fun contains(p: Point): Boolean = sqr(p.x - center.x) + sqr(p.y - center.y) <= sqr(radius)
 }
 
 /**
@@ -107,7 +107,6 @@ data class Segment(val begin: Point, val end: Point) {
  * Если в множестве менее двух точек, бросить IllegalArgumentException
  */
 fun diameter(vararg points: Point): Segment {
-    if (points.size < 2) throw IllegalAccessException("")
     var max = 0.0
     var first = Point(0.0, 0.0)
     var second = Point(0.0, 0.0)
@@ -167,6 +166,15 @@ class Line private constructor(val b: Double, val angle: Double) {
     override fun toString() = "Line(${cos(angle)} * y = ${sin(angle)} * x + $b)"
 }
 
+fun checkAngel(angel: Double): Double {
+    var angel1 = angel
+    if (angel1 < 0) angel1 += PI
+    else IllegalAccessException()
+    if (angel1 == PI) angel1 -= PI
+    else IllegalAccessException()
+    return angel1
+}
+
 /**
  * Средняя
  *
@@ -174,17 +182,14 @@ class Line private constructor(val b: Double, val angle: Double) {
  */
 fun lineBySegment(s: Segment): Line {
     var angel = atan((s.end.y - s.begin.y) / (s.end.x - s.begin.x))
-    if (angel < 0) angel += PI
-    else IllegalAccessException()
-    if (angel == PI) angel -= PI
-    else IllegalAccessException()
+   angel= checkAngel(angel)
     return Line(s.begin, angel)
 }
 
 
 /**
  * Средняя
- *
+ 111111111111*
  * Построить прямую по двум точкам
  */
 fun lineByPoints(a: Point, b: Point): Line = lineBySegment(Segment(a, b))
@@ -196,10 +201,7 @@ fun lineByPoints(a: Point, b: Point): Line = lineBySegment(Segment(a, b))
  */
 fun bisectorByPoints(a: Point, b: Point): Line {
     var angel = atan((b.y - a.y) / (b.x - a.x)) + PI / 2
-    if (angel < 0) angel += PI
-    else IllegalAccessException()
-    if (angel == PI) angel -= PI
-    else IllegalAccessException()
+    angel= checkAngel(angel)
     val point = Point((a.x + b.x) / 2, (a.y + b.y) / 2)
     return Line(point, angel)
 }
@@ -211,10 +213,10 @@ fun bisectorByPoints(a: Point, b: Point): Line {
  * Если в списке менее двух окружностей, бросить IllegalArgumentException
  */
 fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
+    if (circles.size < 2) throw IllegalAccessException()
     var circleFirst = circles[0]
     var circleSecond = circles[1]
     var min = circleFirst.distance(circleSecond)
-    if (circles.size < 2) throw IllegalAccessException()
     for (i in 0 until circles.size - 1)
         for (j in i + 1 until circles.size) {
             if (circles[i].distance(circles[j]) < min) {

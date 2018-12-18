@@ -108,7 +108,6 @@ fun dateDigitToStr(digital: String): String {
     return if (month != "" && day != null && year != null && day in 1..daysInMonth(reallyMonth!!, year))
         String.format("%d $month %d", day, year)
     else ""
-
 }
 
 /**
@@ -141,8 +140,7 @@ fun flattenPhoneNumber(phone: String): String {
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 fun bestLongJump(jumps: String): Int {
-    val falseStr = jumps.replace(Regex("""\s+"""), "")
-    if (!Regex("""(\d+|-|%)+""").matches(falseStr) || Regex("""[-%]+""").matches(falseStr))
+    if (!Regex("""((\d+\s+|%\s+|-\s+)?((%\s+)|(-\s+))\*\d+\s*((%\s+)|(-\s+))*)+""").matches(jumps))
         return -1
     val split = jumps.split(" ", "%", "-").filter { it != "" }.map { it.toInt() }
     var maxJump = split[0]
@@ -153,6 +151,7 @@ fun bestLongJump(jumps: String): Int {
     }
     return maxJump
 }
+
 
 /**
  * Сложная
@@ -179,8 +178,7 @@ fun plusMinus(expression: String): Int {
     var result = 0
     if (Regex("""(\d+[-+])+""").matches(expression))
         return expression.toInt()
-    if ((Regex("""(?:\d+\s*[-+]\s*)+\d+""").matches(expression)) || Regex("""\d+""").matches(expression)
-            && expression.isNotEmpty() && !Regex("""([-+]\s*\d+)+""").matches(expression)) {
+    if ((Regex("""(?:\d+\s[-+]\s)+\d+""").matches(expression)) || Regex("""\d+""").matches(expression)) {
         val sumOfNumber = expression.split(" ")
         if (sumOfNumber.size % 2 != 0)
         //при правильном вводе количество жлементов в заспличенной строке всегда будет равняться нечётному числу
@@ -236,13 +234,11 @@ fun mostExpensive(description: String): String {
         if (newStr.isNotEmpty()) {
             for (i in 0 until newStr.size) {
                 val name = newStr[i].split(' ').filter { it != "" }
-                val cost = name[1].toDoubleOrNull()
-                if (name.size != 2 && cost == null) return ""
-                else if (cost != null) {
-                    if (cost >= max) {
-                        max = cost
-                        item = name[0]
-                    }
+                val cost = name[1].toDouble()
+                if (name.size != 2) return ""
+                else if (cost >= max) {
+                    max = cost
+                    item = name[0]
                 }
             }
 
