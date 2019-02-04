@@ -186,6 +186,38 @@ fun moths(inpetName: String, days: String): Int {
     }
     return max
 }
+val months = mapOf("январь" to Pair(1, 31), "февраль" to Pair(2, 29), "март" to Pair(3, 31), "апрель" to Pair(4, 30),
+        "май" to Pair(5, 31), "июнь" to Pair(6, 30), "июль" to Pair(7, 31), "август" to Pair(8, 31),
+        "сентябрь" to Pair(9, 30), "октябрь" to Pair(10, 31), "ноябрь" to Pair(11, 30), "декабрь" to Pair(12, 31))
+
+
+fun myfun(inputName: String, days: String): Any {
+    val str = try { File(inputName).readLines() } catch (e: IOException)
+    { throw IOException("Невозможно прочитать файл $inputName !") }
+
+    if (!Regex("""[а-яА-Я]+\s\d{1,2}.{3}(\d{1,2}|([а-яА-Я]+\s\d{1,2}))""").matches(days))
+        throw IllegalArgumentException("Параметр days задан в неверном формате!")
+
+    val tempList = mutableListOf<Int>()
+    str.forEach {
+        if (!Regex("""[а-яА-Я]+(\s\d+)+""").matches(it))
+            throw IllegalArgumentException("Файл $inputName задан в неверном формате!")
+        if (!months.keys.contains(it.split(" ").first().toLowerCase()) ||
+                it.split(" ").size != months[it.split(" ").first().toLowerCase()]!!.second &&
+                it.split(" ").first().toLowerCase() != "февраль")
+            throw IllegalArgumentException("Файл $inputName задан в неверном формате!")
+    }
+
+    var temp = months[str.first().split(" ").first().toLowerCase()]!!.first
+    str.forEach {
+        val month = it.split(" ").first().toLowerCase()
+        if ((months[month]!!.first - temp != 1) || (months[month]!!.first == 1 && months[month]!!.first - temp != -30))
+            throw IllegalArgumentException("Месяца в списке заданы не по порядку!")
+        temp = months[month]!!.first
+    }
+
+    return 0
+}
 
 /**
  * Средняя
