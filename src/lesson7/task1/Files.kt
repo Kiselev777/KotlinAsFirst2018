@@ -165,6 +165,28 @@ fun dimasotov(inpetName: String, src: String, dst: String, time: String): String
     return result.toString()
 }
 
+fun moths(inpetName: String, days: String): Int {
+    val inpetStream = File(inpetName).readLines()
+    val splDays = days.split(" ")
+    val month = splDays[0]
+    val splDaysSecond = splDays[1].split("..")
+    val first = splDaysSecond[0].toInt()
+    val second = splDaysSecond[1].toInt()
+    var max = -1
+    inpetStream.forEach { line ->
+        val splLine = line.split(" ")
+        if (month == splLine[0]) {
+            for (i in first until second) {
+                // здесь мог напутать с индексами,попробуй если не будет проходить +1
+                if (splLine[i].toInt() > max)
+                    max = splLine[i].toInt()
+            }
+
+        }
+    }
+    return max
+}
+
 /**
  * Средняя
  *
