@@ -144,26 +144,6 @@ fun football(inputName: String): Map<String, Int> {
 
 }
 
-fun dgggg(inpetName: String, src: String, dst: String, time: String): String {
-    val inpetStream = File(inpetName).readLines()
-    val result = StringBuilder()
-    val timeSpl = time.split(":")
-    val minutes = (timeSpl[0].toInt() * 60 + timeSpl[1].toInt())
-    inpetStream.forEach { line ->
-        val splLine = line.split(":")
-        val city = splLine[0]
-        val timeOf = splLine[1].trim().split(" ")
-        if (city == src) {
-            for (i in 0 until timeOf.size) {
-                val newTime = timeOf[i].split(":")
-                val newTimeMinuetes = (newTime[0].toInt() * 60 + newTime[1].toInt())
-                if (minutes < newTimeMinuetes)
-                    result.append(timeOf[i])
-            }
-        }
-    }
-    return result.toString()
-}
 
 fun moths(inpetName: String, days: String): Int {
     val months = mapOf("январь" to Pair(1, 31), "февраль" to Pair(2, 29), "март" to Pair(3, 31), "апрель" to Pair(4, 30),
