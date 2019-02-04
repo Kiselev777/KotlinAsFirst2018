@@ -98,7 +98,7 @@ fun sibilants(inputName: String, outputName: String) {
     outputStream.close()
 }
 
-fun LenizaLesbi9nka(inputName: String, query: String): String {
+fun Leniza(inputName: String, query: String): String {
     var result = StringBuilder()
     val inputStream = File(inputName).readLines()
     inputStream.forEach { lines ->
@@ -144,7 +144,7 @@ fun football(inputName: String): Map<String, Int> {
 
 }
 
-fun dimasotov(inpetName: String, src: String, dst: String, time: String): String {
+fun dgggg(inpetName: String, src: String, dst: String, time: String): String {
     val inpetStream = File(inpetName).readLines()
     val result = StringBuilder()
     val timeSpl = time.split(":")
@@ -166,6 +166,9 @@ fun dimasotov(inpetName: String, src: String, dst: String, time: String): String
 }
 
 fun moths(inpetName: String, days: String): Int {
+    val months = mapOf("январь" to Pair(1, 31), "февраль" to Pair(2, 29), "март" to Pair(3, 31), "апрель" to Pair(4, 30),
+            "май" to Pair(5, 31), "июнь" to Pair(6, 30), "июль" to Pair(7, 31), "август" to Pair(8, 31),
+            "сентябрь" to Pair(9, 30), "октябрь" to Pair(10, 31), "ноябрь" to Pair(11, 30), "декабрь" to Pair(12, 31))
     val inpetStream = File(inpetName).readLines()
     val splDays = days.split(" ")
     val month = splDays[0]
