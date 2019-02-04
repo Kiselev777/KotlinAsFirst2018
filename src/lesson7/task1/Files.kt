@@ -3,6 +3,7 @@
 package lesson7.task1
 
 import java.io.File
+import java.io.IOException
 
 /**
  * Пример
@@ -95,6 +96,73 @@ fun sibilants(inputName: String, outputName: String) {
         outputStream.newLine()
     }
     outputStream.close()
+}
+
+fun LenizaLesbi9nka(inputName: String, query: String): String {
+    var result = StringBuilder()
+    val inputStream = File(inputName).readLines()
+    inputStream.forEach { lines ->
+        val spl = lines.split(":")
+        val splQuery = query.split(" ")
+        if (splQuery[0].trim().length != 6)
+            throw IllegalArgumentException()
+        if (splQuery[0].trim() == spl[0]) {
+            val resurs = spl[1].split(",")
+            val name = resurs[0].trim()
+            val equals = (resurs[1].trim().toInt()) * (resurs[2].trim().toInt())
+            if (splQuery[1].trim().toInt() <= resurs[2].trim().toInt())
+                result.append("$name,достаточно,общая стоимость $equals р")
+            else result.append("$name,недостаточно,общая стоимость $equals р")
+        }
+        if (!Regex("""\d+\s\d+""").matches(query) ||
+                Regex("""\d+:\s+[а-яА-Я]+,\s+\d+\s+[р],\s+\d+\s+\w+""").matches(lines) || result.isEmpty())
+            throw IllegalArgumentException()
+    }
+    if (inputName.isEmpty())
+        throw IOException()
+    return result.toString()
+}
+
+fun football(inputName: String): Map<String, Int> {
+    val inputStream = File(inputName).readLines()
+    val map = mutableMapOf<String, Int>()
+    for (line in inputStream) {
+        val splLine = line.split("--")
+        val teamName = splLine[0].trim()
+        val teamAndResult = splLine[1].trim().split(" ")
+        val score = teamAndResult[1].split("-")
+        var result = 0
+        when {
+            score[0].toInt() > score[1].toInt() -> result = 3
+            else -> if (score[0].toInt() == score[1].toInt())
+                result = 1
+        }
+        map[teamName] = result
+    }
+    return map
+
+
+}
+
+fun dimasotov(inpetName: String, src: String, dst: String, time: String): String {
+    val inpetStream = File(inpetName).readLines()
+    val result = StringBuilder()
+    val timeSpl = time.split(":")
+    val minutes = (timeSpl[0].toInt() * 60 + timeSpl[1].toInt())
+    inpetStream.forEach { line ->
+        val splLine = line.split(":")
+        val city = splLine[0]
+        val timeOf = splLine[1].trim().split(" ")
+        if (city == src) {
+            for (i in 0 until timeOf.size) {
+                val newTime = timeOf[i].split(":")
+                val newTimeMinuetes = (newTime[0].toInt() * 60 + newTime[1].toInt())
+                if (minutes < newTimeMinuetes)
+                    result.append(timeOf[i])
+            }
+        }
+    }
+    return result.toString()
 }
 
 /**
@@ -214,7 +282,9 @@ fun alignFileByWidth(inputName: String, outputName: String) {
  * Ключи в ассоциативном массиве должны быть в нижнем регистре.
  *
  */
-fun top20Words(inputName: String): Map<String, Int> = TODO()
+fun top20Words(inputName: String): Map<String, Int> {
+    TODO()
+}
 
 /**
  * Средняя
